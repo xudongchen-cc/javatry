@@ -26,7 +26,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author xudong
  */
 public class Step03DataTypeTest extends PlainTestCase {
 
@@ -45,16 +45,18 @@ public class Step03DataTypeTest extends PlainTestCase {
         Boolean dstore = true;
         BigDecimal amba = new BigDecimal("9.4");
 
-        piari = piari.plusDays(1);
-        land = piari.getYear();
-        bonvo = bonvo.plusMonths(1);
-        land = bonvo.getMonthValue();
-        land--;
+        piari = piari.plusDays(1);//2001 9 5
+        land = piari.getYear();//2001
+        bonvo = bonvo.plusMonths(1);//2001 10 4 ...
+        land = bonvo.getMonthValue();//10
+        land--;//9
         if (dstore) {
             BigDecimal addedDecimal = amba.add(new BigDecimal(land));
             sea = String.valueOf(addedDecimal);
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 18.4
+        //log(piari);//2001-09-05
+        //log(bonvo);//2001-10-04T12:34:56
     }
 
     // ===================================================================================
@@ -69,20 +71,42 @@ public class Step03DataTypeTest extends PlainTestCase {
         float dstore = 2147483647.1f;
         double amba = 2.3d;
         char miraco = 'a';
-        boolean dohotel = miraco == 'a';
-        if (dohotel && dstore >= piari) {
-            bonvo = sea;
-            land = (short) bonvo;
-            bonvo = piari;
-            sea = (byte) land;
-            if (amba == 2.3D) {
-                sea = (byte) amba;
+        boolean dohotel = miraco == 'a';//true
+
+        //dstore = 5.4f;
+        //piari = 5;
+
+        log(dstore);
+        log(piari);
+        log((float) piari);
+        log((int) dstore);
+        log(Float.toHexString(dstore));
+        log(Integer.toHexString(piari));
+
+        if(dstore == piari)
+        {
+            log("here");
+        }
+
+        if (dohotel && dstore >= piari) {//true
+            bonvo = sea;//127
+            //log(bonvo);
+            land = (short) bonvo;//127
+            //log(land);
+            bonvo = piari;//2147483647
+            //log(bonvo);
+            sea = (byte) land;//127
+            //log(sea);
+            if (amba == 2.3D) {//true
+                sea = (byte) amba;//? 2  切り捨て
+                //log(sea);
             }
         }
-        if (dstore > piari) {
+        if (dstore > piari) {//true?    not true
+            //log("here");
             sea = 0;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 0?    2
     }
 
     // ===================================================================================
@@ -92,7 +116,7 @@ public class Step03DataTypeTest extends PlainTestCase {
     public void test_datatype_object() {
         St3ImmutableStage stage = new St3ImmutableStage("hangar");
         String sea = stage.getStageName();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => hanger
     }
 
     private static class St3ImmutableStage {

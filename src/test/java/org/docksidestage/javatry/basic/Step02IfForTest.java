@@ -25,7 +25,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author xudong
  */
 public class Step02IfForTest extends PlainTestCase {
 
@@ -92,6 +92,8 @@ public class Step02IfForTest extends PlainTestCase {
             sea = 10;
         }
         log(sea); // your answer? => 10
+        //if文をできるだけへる、クラスに分ける  kawashimaさんに参考
+        //https://github.com/kawasima/kata
     }
 
     // ===================================================================================
@@ -162,6 +164,7 @@ public class Step02IfForTest extends PlainTestCase {
     public void test_iffor_making() {
         // write if-for here
         List<String> stageList = prepareStageList();
+        List<String> result = new ArrayList<>();
 
         /*
         for(String str : stageList)
@@ -183,8 +186,13 @@ public class Step02IfForTest extends PlainTestCase {
 
         stageList.forEach(str -> {
             if (str.contains("a"))
-                log(str);
+                result.add(str);
         });
+
+        for(String sea : result)
+        {
+            log(sea);
+        }
     }
 
     // ===================================================================================
@@ -219,6 +227,7 @@ public class Step02IfForTest extends PlainTestCase {
             }
         });
         String sea = sb.toString();
+
         log(sea); // should be same as before-fix
     }
 
@@ -234,6 +243,7 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_yourExercise() {
         // write your code here
+
     }
 
     // ===================================================================================

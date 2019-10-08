@@ -35,7 +35,7 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_call_basic() {
         String sea = supplySomething();
-        log(sea); // your answer? =>
+        log(sea); // your answer? => over
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -43,7 +43,7 @@ public class Step04MethodTest extends PlainTestCase {
         String sea = functionSomething("mystic");
         consumeSomething(supplySomething());
         runnableSomething();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => mysmys
     }
 
     private String functionSomething(String name) {
@@ -72,21 +72,29 @@ public class Step04MethodTest extends PlainTestCase {
         St4MutableStage mutable = new St4MutableStage();
         int sea = 904;
         boolean land = false;
+        log(mutable);
         helloMutable(sea - 4, land, mutable);
+        log(mutable);
         if (!land) {
             sea = sea + mutable.getStageName().length();
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 910
     }
 
     private int helloMutable(int sea, Boolean land, St4MutableStage piari) {
         sea++;
         land = true;
         piari.setStageName("mystic");
+
+        log(piari);
+        piari = new St4MutableStage();
+        piari.setStageName("hoge");
+        log(piari);
+
         return sea;
     }
 
-    private static class St4MutableStage {
+    private static class St4MutableStage {  //これミュータブル？ 普通は
 
         private String stageName;
 
@@ -108,14 +116,14 @@ public class Step04MethodTest extends PlainTestCase {
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_method_instanceVariable() {
         hasAnnualPassport = true;
-        int sea = inParkCount;
-        offAnnualPassport(hasAnnualPassport);
+        int sea = inParkCount;//0
+        offAnnualPassport(hasAnnualPassport);//false
         for (int i = 0; i < 100; i++) {
             goToPark();
-        }
-        ++sea;
-        sea = inParkCount;
-        log(sea); // your answer? => 
+        }//100
+        ++sea;//1
+        sea = inParkCount;//100
+        log(sea); // your answer? => 100
     }
 
     private void offAnnualPassport(boolean hasAnnualPassport) {
@@ -152,12 +160,37 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_making() {
         // comment out after making these methods
-        //String replaced = replaceCtoB(replaceAtoB("ABC"));
-        //String sea = addPrefix("broadway", replaced);
-        //if (isAvailableLogging()) {
-        //    showSea(sea);
-        //}
+        String replaced = replaceCtoB(replaceAtoB("ABC"));
+        String sea = addPrefix("broadway", replaced);
+        if (isAvailableLogging()) {
+            showSea(sea);
+        }
     }
 
     // write methods here
+    private boolean availableLogging = true;
+    private String replaceAtoB(String str)
+    {
+        return str.replace("A", "B");
+    }
+
+    private String replaceCtoB(String str)
+    {
+        return str.replace("C", "B");
+    }
+
+    private String addPrefix(String str1, String str2)
+    {
+        return str1 + ":" + str2;
+    }
+
+    private boolean isAvailableLogging()
+    {
+        return availableLogging;
+    }
+
+    private void showSea(String str)
+    {
+        log(str);
+    }
 }
