@@ -18,7 +18,13 @@ package org.docksidestage.bizfw.basic.buyticket;
 /**
  * @author jflute
  */
-public class Ticket {
+// public class Ticket {
+interface Ticket{
+
+    void doInPark();
+    int getDisplayPrice();
+
+    /*
 
     // ===================================================================================
     //                                                                           Attribute
@@ -53,4 +59,5 @@ public class Ticket {
     public boolean isAlreadyIn() {
         return alreadyIn;
     }
+    */
 }

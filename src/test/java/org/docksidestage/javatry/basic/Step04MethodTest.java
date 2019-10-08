@@ -22,7 +22,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author xudong
  */
 public class Step04MethodTest extends PlainTestCase {
 
@@ -169,14 +169,14 @@ public class Step04MethodTest extends PlainTestCase {
 
     // write methods here
     private boolean availableLogging = true;
-    private String replaceAtoB(String str)
+    private String replaceAtoB(String target)
     {
-        return str.replace("A", "B");
+        return target.replace("A", "B");
     }
 
-    private String replaceCtoB(String str)
+    private String replaceCtoB(String target)
     {
-        return str.replace("C", "B");
+        return target.replace("C", "B");
     }
 
     private String addPrefix(String str1, String str2)

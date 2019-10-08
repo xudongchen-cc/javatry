@@ -26,10 +26,14 @@ public class TicketBooth {
     private static final int MAX_QUANTITY = 10;
     private static final int ONE_DAY_PRICE = 7400; // when 2019/06/15
 
+    private static final int MAX_QUANTITY_TWO = 10;
+    private static final int TWO_DAY_PRICE = 13200;
+
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    private int quantity = MAX_QUANTITY;
+    private int quantity1 = MAX_QUANTITY;
+    private int quantity2 = MAX_QUANTITY_TWO;
     private Integer salesProceeds;
 
     // ===================================================================================
@@ -41,7 +45,8 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Buy Ticket
     //                                                                          ==========
-    public void buyOneDayPassport(int handedMoney) {
+    public Ticket buyOneDayPassport(int handedMoney) {
+        /*
         if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
@@ -53,6 +58,73 @@ public class TicketBooth {
             salesProceeds = salesProceeds + handedMoney;
         } else {
             salesProceeds = handedMoney;
+        }
+        */
+
+        /*
+        if (quantity1 <= 0) {
+            throw new TicketSoldOutException("Sold out");
+        }
+        else if (handedMoney < ONE_DAY_PRICE) {
+            throw new TicketShortMoneyException("Short money: " + handedMoney);
+        }
+        else
+        {
+            --quantity1;
+            if (salesProceeds != null) {
+                salesProceeds = salesProceeds + ONE_DAY_PRICE;
+            } else {
+                salesProceeds = ONE_DAY_PRICE;
+            }
+        }
+        */
+        //return buyPassport(quantity1, handedMoney, ONE_DAY_PRICE);
+        buyPassport(quantity1, handedMoney, ONE_DAY_PRICE);
+        return new Ticket(ONE_DAY_PRICE);
+    }
+
+    public TicketBuyResult buyTwoDayPassport(int handedMoney)
+    {
+        /*
+        if (quantity2 <= 0) {
+            throw new TicketSoldOutException("Sold out");
+        }
+        else if (handedMoney < TWO_DAY_PRICE) {
+            throw new TicketShortMoneyException("Short money: " + handedMoney);
+        }
+        else
+        {
+            --quantity2;
+            if (salesProceeds != null) {
+                salesProceeds = salesProceeds + TWO_DAY_PRICE;
+            } else {
+                salesProceeds = TWO_DAY_PRICE;
+            }
+            return handedMoney - TWO_DAY_PRICE;
+        }
+        */
+        //return buyPassport(quantity2, handedMoney, TWO_DAY_PRICE);
+        int change = buyPassport(quantity2, handedMoney, TWO_DAY_PRICE);
+        return new TicketBuyResult(TWO_DAY_PRICE, change);
+    }
+
+    private int buyPassport(int quantity, int handedMoney, int PRICE)
+    {
+        if (quantity1 <= 0) {
+            throw new TicketSoldOutException("Sold out");
+        }
+        else if (handedMoney < PRICE) {
+            throw new TicketShortMoneyException("Short money: " + handedMoney);
+        }
+        else
+        {
+            --quantity1;
+            if (salesProceeds != null) {
+                salesProceeds = salesProceeds + PRICE;
+            } else {
+                salesProceeds = PRICE;
+            }
+            return handedMoney - PRICE;
         }
     }
 
@@ -78,7 +150,11 @@ public class TicketBooth {
     //                                                                            Accessor
     //                                                                            ========
     public int getQuantity() {
-        return quantity;
+        return quantity1;
+    }
+
+    public int getQuantity_two() {
+        return quantity2;
     }
 
     public Integer getSalesProceeds() {
