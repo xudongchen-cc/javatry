@@ -39,8 +39,7 @@ public class OneDayTicket implements Ticket {
         return ticketType;
     }
 
-    public boolean isAlreadyIn()
-    {
-        return leftInParkTime==0;
+    public boolean isAlreadyIn() {
+        return leftInParkTime == 0;
     }
 }

@@ -17,8 +17,9 @@ package org.docksidestage.bizfw.basic.buyticket;
 
 /**
  * @author jflute
+ * @author xudong
  */
-// TODO xudong add your name to @author. fix it on other file. by katashin (2019/10/09)
+// TODO done xudong add your name to @author. fix it on other file. by katashin (2019/10/09)
 // @author に名前を追加しましょう。他のファイルもね。
 public class TicketBooth {
 
@@ -88,8 +89,7 @@ public class TicketBooth {
         return new TicketBuyResult(ONE_DAY_PRICE, change, "ONE");
     }
 
-    public TicketBuyResult buyTwoDayPassport(int handedMoney)
-    {
+    public TicketBuyResult buyTwoDayPassport(int handedMoney) {
         /*
         if (quantity2 <= 0) {
             throw new TicketSoldOutException("Sold out");
@@ -112,38 +112,33 @@ public class TicketBooth {
         return new TicketBuyResult(TWO_DAY_PRICE, change, "TWO");
     }
 
-    public TicketBuyResult buyFourDayPassport(int handedMoney)
-    {
+    public TicketBuyResult buyFourDayPassport(int handedMoney) {
         int change = buyPassport(quantity4, handedMoney, FOUR_DAY_PRICE, "FOUR");
         return new TicketBuyResult(FOUR_DAY_PRICE, change, "FOUR");
     }
 
     // TODO xudong accumulating to buyPassport method is good. define constant value of type as static final string is better.
     // buyPassportにまとまったのはいいね。 typeのための定数を、static final stringとして宣言できるといいね。
-    // TODO xudong method parameter is presented as lowercase as a habit. so price is better than PRICE. by katashin (2019/10/09)
+    // TODO done xudong method parameter is presented as lowercase as a habit. so price is better than PRICE. by katashin (2019/10/09)
     // メソッドの引数は習慣として小文字が多いです。priceの方がいいね。
-    private int buyPassport(int quantity, int handedMoney, int PRICE, String type)
-    {
+    private int buyPassport(int quantity, int handedMoney, int price, String type) {
         if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
-        }
-        else if (handedMoney < PRICE) {
+        } else if (handedMoney < price) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
-        }
-        else
-        {
-            if(type.equals("ONE"))
+        } else {
+            if (type.equals("ONE"))
                 --quantity1;
-            if(type.equals("TWO"))
+            if (type.equals("TWO"))
                 --quantity2;
-            if(type.equals("FOUR"))
+            if (type.equals("FOUR"))
                 --quantity4;
             if (salesProceeds != null) {
-                salesProceeds = salesProceeds + PRICE;
+                salesProceeds = salesProceeds + price;
             } else {
-                salesProceeds = PRICE;
+                salesProceeds = price;
             }
-            return handedMoney - PRICE;
+            return handedMoney - price;
         }
     }
 

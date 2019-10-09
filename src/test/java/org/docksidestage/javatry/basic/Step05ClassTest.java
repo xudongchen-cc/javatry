@@ -20,11 +20,8 @@ import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketShortMoneyExcep
 import org.docksidestage.unit.PlainTestCase;
 
 import org.docksidestage.bizfw.basic.buyticket.Ticket;
-import org.docksidestage.bizfw.basic.buyticket.OneDayTicket;
-import org.docksidestage.bizfw.basic.buyticket.TwoDayTicket;
-import org.docksidestage.bizfw.basic.buyticket.FourDayTicket;
 import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
-// TODO xudong remove unused import. use shortcut key (option + control + o) by katashin (2019/10/09)
+// TODO done xudong remove unused import. use shortcut key (option + control + o) by katashin (2019/10/09)
 // 不要なimportは消しましょう。ショートカットキーもあるよ(option + control + o)
 
 /**
@@ -207,7 +204,7 @@ public class Step05ClassTest extends PlainTestCase {
         // your confirmation code here
         TicketBooth booth = new TicketBooth();
         int handedMoney = 40000;
-        try{
+        try {
             TicketBuyResult passportResultOne = booth.buyOneDayPassport(handedMoney);
             TicketBuyResult passportResultTwo = booth.buyTwoDayPassport(handedMoney);
             Ticket passportOne = passportResultOne.getTicket();
@@ -228,11 +225,11 @@ public class Step05ClassTest extends PlainTestCase {
                 log("succeed in go into the park twoday");
                 passportTwo.doInPark();
                 log("succeed in go into the park twoday");
-            }catch (IllegalStateException continued) {
+            } catch (IllegalStateException continued) {
                 log("Failed to go into the park", continued);
             }
 
-        }catch (TicketShortMoneyException continued) {
+        } catch (TicketShortMoneyException continued) {
             log("Failed to buy passport: money=" + handedMoney, continued);
         }
     }
@@ -245,7 +242,7 @@ public class Step05ClassTest extends PlainTestCase {
         // your confirmation code here
         TicketBooth booth = new TicketBooth();
         int handedMoney = 40000;
-        try{
+        try {
             TicketBuyResult passportResult = booth.buyFourDayPassport(handedMoney);
             Ticket passport = passportResult.getTicket();
             int change = passportResult.getChange();
@@ -263,11 +260,11 @@ public class Step05ClassTest extends PlainTestCase {
                 log("succeed in go into the park");//ここまでsuccess
                 passport.doInPark();
                 log("succeed in go into the park");
-            }catch (IllegalStateException continued) {
+            } catch (IllegalStateException continued) {
                 log("Failed to go into the park", continued);
             }
 
-        }catch (TicketShortMoneyException continued) {
+        } catch (TicketShortMoneyException continued) {
             log("Failed to buy passport: money=" + handedMoney, continued);
         }
     }
@@ -280,7 +277,7 @@ public class Step05ClassTest extends PlainTestCase {
         // write confirmation code here
         TicketBooth booth = new TicketBooth();
         int handedMoney = 40000;
-        try{
+        try {
             TicketBuyResult passportResult = booth.buyOneDayPassport(handedMoney);
             //TicketBuyResult passportResult = booth.buyTwoDayPassport(handedMoney);
             //TicketBuyResult passportResult = booth.buyFourDayPassport(handedMoney);
@@ -300,11 +297,11 @@ public class Step05ClassTest extends PlainTestCase {
                 log("succeed in go into the park");
                 passport.doInPark();
                 log("succeed in go into the park");
-            }catch (IllegalStateException continued) {
+            } catch (IllegalStateException continued) {
                 log("Failed to go into the park", continued);
             }
 
-        }catch (TicketShortMoneyException continued) {
+        } catch (TicketShortMoneyException continued) {
             log("Failed to buy passport: money=" + handedMoney, continued);
         }
         log(booth.getQuantity());
