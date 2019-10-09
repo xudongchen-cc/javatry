@@ -18,6 +18,8 @@ package org.docksidestage.bizfw.basic.buyticket;
 /**
  * @author jflute
  */
+// TODO xudong add your name to @author. fix it on other file. by katashin (2019/10/09)
+// @author に名前を追加しましょう。他のファイルもね。
 public class TicketBooth {
 
     // ===================================================================================
@@ -116,6 +118,8 @@ public class TicketBooth {
         return new TicketBuyResult(FOUR_DAY_PRICE, change, "FOUR");
     }
 
+    // TODO xudong accumulating to buyPassport method is good. define constant value of type as static final string is better.
+    // buyPassportにまとまったのはいいね。 typeのための定数を、static final stringとして宣言できるといいね。
     private int buyPassport(int quantity, int handedMoney, int PRICE, String type)
     {
         if (quantity <= 0) {
