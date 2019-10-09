@@ -22,6 +22,7 @@ import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 /**
  * The object for animal(動物).
  * @author jflute
+ * @author xudong
  */
 public abstract class Animal implements Loudable {
 

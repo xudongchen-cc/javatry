@@ -17,6 +17,7 @@ package org.docksidestage.javatry.basic.st6.os;
 
 /**
  * @author jflute
+ * @author xudong
  */
 public abstract class St6OperationSystem {
 

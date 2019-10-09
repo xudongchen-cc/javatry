@@ -5,8 +5,7 @@ package org.docksidestage.javatry.basic.st6.os;
  */
 public class St6OperationOldWindows extends St6OperationSystem {
 
-    public St6OperationOldWindows(String loginId)
-    {
+    public St6OperationOldWindows(String loginId) {
         super(loginId);
     }
 

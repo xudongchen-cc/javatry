@@ -5,8 +5,7 @@ package org.docksidestage.javatry.basic.st6.os;
  */
 public class St6OperationMac extends St6OperationSystem {
 
-    public St6OperationMac(String loginId)
-    {
+    public St6OperationMac(String loginId) {
         super(loginId);
     }
 

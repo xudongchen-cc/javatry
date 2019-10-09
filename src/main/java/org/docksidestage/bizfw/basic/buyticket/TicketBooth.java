@@ -85,7 +85,7 @@ public class TicketBooth {
             }
         }
         */
-        int change = buyPassport(quantity1, handedMoney, ONE_DAY_PRICE, "ONE");
+        int change = buyPassport(quantity1, handedMoney, ONE_DAY_PRICE, TicketType.Oneday);
         return new TicketBuyResult(ONE_DAY_PRICE, change, "ONE");
     }
 
@@ -108,12 +108,12 @@ public class TicketBooth {
             return handedMoney - TWO_DAY_PRICE;
         }
         */
-        int change = buyPassport(quantity2, handedMoney, TWO_DAY_PRICE, "TWO");
+        int change = buyPassport(quantity2, handedMoney, TWO_DAY_PRICE, TicketType.Twoday);
         return new TicketBuyResult(TWO_DAY_PRICE, change, "TWO");
     }
 
     public TicketBuyResult buyFourDayPassport(int handedMoney) {
-        int change = buyPassport(quantity4, handedMoney, FOUR_DAY_PRICE, "FOUR");
+        int change = buyPassport(quantity4, handedMoney, FOUR_DAY_PRICE, TicketType.Fourday);
         return new TicketBuyResult(FOUR_DAY_PRICE, change, "FOUR");
     }
 
@@ -121,17 +121,17 @@ public class TicketBooth {
     // buyPassportにまとまったのはいいね。 typeのための定数を、static final stringとして宣言できるといいね。
     // TODO done xudong method parameter is presented as lowercase as a habit. so price is better than PRICE. by katashin (2019/10/09)
     // メソッドの引数は習慣として小文字が多いです。priceの方がいいね。
-    private int buyPassport(int quantity, int handedMoney, int price, String type) {
+    private int buyPassport(int quantity, int handedMoney, int price, TicketType type) {
         if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
         } else if (handedMoney < price) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         } else {
-            if (type.equals("ONE"))
+            if (type.equals(TicketType.Oneday))
                 --quantity1;
-            if (type.equals("TWO"))
+            if (type.equals(TicketType.Twoday))
                 --quantity2;
-            if (type.equals("FOUR"))
+            if (type.equals(TicketType.Fourday))
                 --quantity4;
             if (salesProceeds != null) {
                 salesProceeds = salesProceeds + price;

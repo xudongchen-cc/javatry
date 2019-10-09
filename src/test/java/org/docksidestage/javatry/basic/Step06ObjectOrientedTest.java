@@ -155,10 +155,10 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //(changed after 5)Ticket ticket = new Ticket(7400); // also here
         int handedMoney = 10000;
         Ticket ticket = null;
-        try{
+        try {
             TicketBuyResult passportResult = booth.buyOneDayPassport(handedMoney);
             ticket = passportResult.getTicket();
-        }catch (TicketBooth.TicketShortMoneyException continued) {
+        } catch (TicketBooth.TicketShortMoneyException continued) {
             log("Failed to buy passport: money=" + handedMoney, continued);
         }
 
@@ -375,8 +375,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // your confirmation code here
         St6Sql mySQl = new St6MySql();
         St6Sql postgreSql = new St6PostgreSql();
-        log(mySQl.buildPagingQuery(5,5));
-        log(postgreSql.buildPagingQuery(5,5));
+        log(mySQl.buildPagingQuery(5, 5));
+        log(postgreSql.buildPagingQuery(5, 5));
     }
 
     /**

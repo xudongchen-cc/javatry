@@ -20,6 +20,7 @@ import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
 /**
  * The object for dog(犬).
  * @author jflute
+ * @author xudong
  */
 public class Dog extends Animal implements FastRunner,Fly {
 
