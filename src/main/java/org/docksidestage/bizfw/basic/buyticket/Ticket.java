@@ -23,6 +23,7 @@ public interface Ticket{
 
     void doInPark();
     int getDisplayPrice();
+    int getLeftInParkTime();
     String getTicketType();
 
     /*

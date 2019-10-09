@@ -110,7 +110,7 @@ public class Step01VariableTest extends PlainTestCase {
         instanceMagiclamp = "magician";
         helpInstanceVariableViaMethod(instanceMagiclamp);
         String sea = instanceBroadway + "|" + instanceDockside + "|" + instanceHangar + "|" + instanceMagiclamp;
-        log(sea); // your answer? => hh
+        log(sea); // your answer? => bigband|1|null|magician
     }
 
     private void helpInstanceVariableViaMethod(String instanceMagiclamp) {
@@ -130,7 +130,7 @@ public class Step01VariableTest extends PlainTestCase {
         String sea = "harbor";
         int land = 415;
         helpMethodArgumentImmutableMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor
     }
 
     private void helpMethodArgumentImmutableMethodcall(String sea, int land) {
@@ -147,13 +147,15 @@ public class Step01VariableTest extends PlainTestCase {
         StringBuilder sea = new StringBuilder("harbor");
         int land = 415;
         helpMethodArgumentMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor416
     }
 
     private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
         ++land;
         sea.append(land);
     }
+    //StringBuilder ミュータブル
+    //String notミュータブル
 
     // -----------------------------------------------------
     //                                   Variable Assignment
@@ -163,13 +165,15 @@ public class Step01VariableTest extends PlainTestCase {
         StringBuilder sea = new StringBuilder("harbor");
         int land = 415;
         helpMethodArgumentVariable(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor
     }
 
     private void helpMethodArgumentVariable(StringBuilder sea, int land) {
         ++land;
         String seaStr = sea.toString(); // is "harbor"
+        //seaまだ同じ参照
         sea = new StringBuilder(seaStr).append(land);
+        //違う参照になった
     }
 
     // ===================================================================================

@@ -13,7 +13,7 @@ public class TwoDayTicket implements Ticket{
     {
         displayPrice = price;
         leftInParkTime = 2;
-        ticketType = "OneDayTicket";
+        ticketType = "TwoDayTicket";
     }
 
     public void doInPark()
@@ -27,6 +27,11 @@ public class TwoDayTicket implements Ticket{
     public int getDisplayPrice()
     {
         return displayPrice;
+    }
+
+    public int getLeftInParkTime()
+    {
+        return leftInParkTime;
     }
 
     public String getTicketType()

@@ -29,6 +29,11 @@ public class FourDayTicket implements Ticket{
         return displayPrice;
     }
 
+    public int getLeftInParkTime()
+    {
+        return leftInParkTime;
+    }
+
     public String getTicketType()
     {
         return ticketType;

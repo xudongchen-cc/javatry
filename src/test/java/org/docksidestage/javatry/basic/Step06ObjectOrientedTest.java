@@ -17,6 +17,7 @@ package org.docksidestage.javatry.basic;
 
 import org.docksidestage.bizfw.basic.buyticket.Ticket;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
+import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
 import org.docksidestage.bizfw.basic.objanimal.Animal;
 import org.docksidestage.bizfw.basic.objanimal.BarkedSound;
 import org.docksidestage.bizfw.basic.objanimal.Cat;
@@ -65,12 +66,18 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
             throw new IllegalStateException("Short money: handedMoney=" + handedMoney);
         }
         --quantity;
-        salesProceeds = handedMoney;
+        //salesProceeds = handedMoney;(changed1)
+        if (salesProceeds != null) {
+            salesProceeds = salesProceeds + oneDayPrice;
+        } else {
+            salesProceeds = oneDayPrice;
+        }
 
         //
         // [ticket info]
         //
-        int displayPrice = quantity;
+        //int displayPrice = quantity;(changed2)
+        int displayPrice = oneDayPrice;
         boolean alreadyIn = false;
 
         // other processes here...
@@ -81,7 +88,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // [do in park now!!!]
         //
         if (alreadyIn) {
-            throw new IllegalStateException("Already in park by this ticket: displayPrice=" + quantity);
+            //throw new IllegalStateException("Already in park by this ticket: displayPrice=" + quantity);(changed3)
+            throw new IllegalStateException("Already in park by this ticket: displayPrice=" + displayPrice);
         }
         alreadyIn = true;
 
@@ -94,8 +102,10 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     private void saveBuyingHistory(int quantity, Integer salesProceeds, int displayPrice, boolean alreadyIn) {
         if (alreadyIn) {
             // only logging here (normally e.g. DB insert)
-            showTicketBooth(displayPrice, salesProceeds);
-            showYourTicket(quantity, alreadyIn);
+            //showTicketBooth(displayPrice, salesProceeds);(changed4)
+            //showYourTicket(quantity, alreadyIn);(change5)
+            showTicketBooth(quantity, salesProceeds);
+            showYourTicket(displayPrice, alreadyIn);
         }
     }
 
@@ -132,8 +142,18 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // #fixme you if step05 has been finished, you can use this code by jflute (2019/06/15)
         // _/_/_/_/_/_/_/_/_/_/
         //Ticket ticket = booth.buyOneDayPassport(10000);
-        booth.buyOneDayPassport(10000); // as temporary, remove if you finished steo05
+        //(changed after 5)booth.buyOneDayPassport(10000); // as temporary, remove if you finished steo05
         //(changed after 5)Ticket ticket = new Ticket(7400); // also here
+        int handedMoney = 10000;
+        Ticket ticket = null;
+        try{
+            TicketBuyResult passportResult = booth.buyOneDayPassport(handedMoney);
+            //TicketBuyResult passportResult = booth.buyTwoDayPassport(handedMoney);
+            //TicketBuyResult passportResult = booth.buyFourDayPassport(handedMoney);
+            ticket = passportResult.getTicket();
+        }catch (TicketBooth.TicketShortMoneyException continued) {
+            log("Failed to buy passport: money=" + handedMoney, continued);
+        }
 
         // *buyOneDayPassport() has this process:
         //if (quantity <= 0) {
@@ -157,6 +177,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // [do in park now!!!]
         //
         //(changed after 5)ticket.doInPark();
+        if (ticket != null) {
+            ticket.doInPark();
+        }
 
         // *doInPark() has this process:
         //if (alreadyIn) {
@@ -167,7 +190,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //
         // [final process]
         //
-        //(changed after 5)saveBuyingHistory(booth, ticket);
+        saveBuyingHistory(booth, ticket);
     }
 
     private void saveBuyingHistory(TicketBooth booth, Ticket ticket) {
@@ -179,6 +202,11 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
             doShowYourTicket(ticket);
         }
         */
+        if (ticket.getLeftInParkTime()==0) {
+            // only logging here (normally e.g. DB insert)
+            doShowTicketBooth(booth);
+            doShowYourTicket(ticket);
+        }
     }
 
     private void doShowTicketBooth(TicketBooth booth) {
@@ -187,6 +215,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
 
     private void doShowYourTicket(Ticket ticket) {
         //(changed after 5)log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), ticket.isAlreadyIn());
+        log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), true);
     }
 
     // ===================================================================================
@@ -200,9 +229,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Dog dog = new Dog();
         BarkedSound sound = dog.bark();
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => wan
         int land = dog.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -210,9 +239,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Animal animal = new Dog();
         BarkedSound sound = animal.bark();
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => wan
         int land = animal.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -220,9 +249,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Animal animal = createAnyAnimal();
         BarkedSound sound = animal.bark();
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => wan
         int land = animal.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => 7
     }
 
     private Animal createAnyAnimal() {
@@ -238,9 +267,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     private void doAnimalSeaLand_for_4th(Animal animal) {
         BarkedSound sound = animal.bark();
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => wan
         int land = animal.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => 7
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -248,9 +277,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Animal animal = new Cat();
         BarkedSound sound = animal.bark();
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => nya-
         int land = animal.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => 5
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -258,9 +287,9 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Animal animal = new Zombie();
         BarkedSound sound = animal.bark();
         String sea = sound.getBarkWord();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => uooo
         int land = animal.getHitPoint();
-        log(land); // your answer? => 
+        log(land); // your answer? => -1
     }
 
     // ===================================================================================
