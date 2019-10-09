@@ -19,7 +19,7 @@ package org.docksidestage.bizfw.basic.buyticket;
  * @author jflute
  * @author xudong
  */
-// TODO done xudong add your name to @author. fix it on other file. by katashin (2019/10/09)
+// done xudong add your name to @author. fix it on other file. by katashin (2019/10/09)
 // @author に名前を追加しましょう。他のファイルもね。
 public class TicketBooth {
 
@@ -119,7 +119,7 @@ public class TicketBooth {
 
     // TODO xudong accumulating to buyPassport method is good. define constant value of type as static final string is better.
     // buyPassportにまとまったのはいいね。 typeのための定数を、static final stringとして宣言できるといいね。
-    // TODO done xudong method parameter is presented as lowercase as a habit. so price is better than PRICE. by katashin (2019/10/09)
+    // done xudong method parameter is presented as lowercase as a habit. so price is better than PRICE. by katashin (2019/10/09)
     // メソッドの引数は習慣として小文字が多いです。priceの方がいいね。
     private int buyPassport(int quantity, int handedMoney, int price, String type) {
         if (quantity <= 0) {
