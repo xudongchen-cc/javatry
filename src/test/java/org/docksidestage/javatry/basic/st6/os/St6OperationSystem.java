@@ -18,7 +18,7 @@ package org.docksidestage.javatry.basic.st6.os;
 /**
  * @author jflute
  */
-public class St6OperationSystem {
+public abstract class St6OperationSystem {
 
     // ===================================================================================
     //                                                                          Definition
@@ -30,7 +30,8 @@ public class St6OperationSystem {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    private final String loginId;
+    //private final String loginId;
+    protected final String loginId;
     private String osType;
 
     // ===================================================================================
@@ -50,7 +51,9 @@ public class St6OperationSystem {
         return resourcePath.replace("/", fileSeparator);
     }
 
-    protected String getFileSeparator() {
+    abstract protected String getFileSeparator();
+    /*
+    {
         if (OS_TYPE_MAC.equalsIgnoreCase(osType)) {
             return "/";
         } else if (OS_TYPE_WINDOWS.equalsIgnoreCase(osType)) {
@@ -61,8 +64,11 @@ public class St6OperationSystem {
             throw new IllegalStateException("Unknown osType: " + osType);
         }
     }
+    */
 
-    protected String getUserDirectory() {
+    abstract protected String getUserDirectory();
+    /*
+    {
         if (OS_TYPE_MAC.equalsIgnoreCase(osType)) {
             return "/Users/" + loginId;
         } else if (OS_TYPE_WINDOWS.equalsIgnoreCase(osType)) {
@@ -73,4 +79,5 @@ public class St6OperationSystem {
             throw new IllegalStateException("Unknown osType: " + osType);
         }
     }
+    */
 }

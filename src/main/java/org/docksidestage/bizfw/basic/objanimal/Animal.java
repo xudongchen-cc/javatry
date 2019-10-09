@@ -16,8 +16,8 @@
 package org.docksidestage.bizfw.basic.objanimal;
 
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * The object for animal(動物).
@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class Animal implements Loudable {
 
+    /*
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
@@ -66,9 +67,16 @@ public abstract class Animal implements Loudable {
         logger.debug("...Breathing in"); // dummy implementation
         downHitPoint();
     }
+    */
 
     protected abstract String getBarkWord();
 
+    protected BarkingProcess barkingProcess = new BarkingProcess(getBarkWord());
+    public BarkedSound bark() {
+        return barkingProcess.bark();
+    }
+
+    /*
     protected BarkedSound doBark(String barkWord) {
         downHitPoint();
         return new BarkedSound(barkWord);
@@ -83,19 +91,20 @@ public abstract class Animal implements Loudable {
             throw new IllegalStateException("I'm very tired, so I want to sleep" + getBarkWord());
         }
     }
+    */
 
     // ===================================================================================
     //                                                                               Loud
     //                                                                              ======
     @Override
     public String soundLoudly() {
-        return bark().getBarkWord();
+        return barkingProcess.bark().getBarkWord();
     }
 
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
     public int getHitPoint() {
-        return hitPoint;
+        return barkingProcess.getHitPoint();
     }
 }

@@ -21,7 +21,7 @@ import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
  * The object for dog(犬).
  * @author jflute
  */
-public class Dog extends Animal implements FastRunner {
+public class Dog extends Animal implements FastRunner,Fly {
 
     // ===================================================================================
     //                                                                         Constructor
@@ -38,8 +38,9 @@ public class Dog extends Animal implements FastRunner {
     }
 
     @Override
-    public void run() {
-        // dummy implementation
-        //logger.debug("...Running now");
+    public void run() { }
+    public boolean doFly()
+    {
+        return false;
     }
 }

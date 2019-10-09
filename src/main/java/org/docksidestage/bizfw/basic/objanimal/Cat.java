@@ -53,6 +53,7 @@ public class Cat extends Animal implements FastRunner {
         logger.debug("...Running now");
     }
 
+    /*
     // ===================================================================================
     //                                                                           Hit Point
     //                                                                           =========
@@ -63,4 +64,5 @@ public class Cat extends Animal implements FastRunner {
             super.downHitPoint();
         }
     }
+    */
 }

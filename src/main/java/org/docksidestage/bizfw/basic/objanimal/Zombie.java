@@ -32,10 +32,12 @@ public class Zombie extends Animal {
     public Zombie() {
     }
 
+    /*
     @Override
     protected int getInitialHitPoint() {
         return -1; // magic number for infinity hit point
     }
+    */
 
     public static class ZombieDiary {
 
@@ -50,6 +52,7 @@ public class Zombie extends Animal {
         }
     }
 
+    /*
     // ===================================================================================
     //                                                                               Bark
     //                                                                              ======
@@ -58,12 +61,19 @@ public class Zombie extends Animal {
         super.breatheIn();
         zombieDiary.countBreatheIn();
     }
+    */
+    @Override
+    public BarkedSound bark() {
+        zombieDiary.countBreatheIn();
+        return barkingProcess.bark();
+    }
 
     @Override
     protected String getBarkWord() {
         return "uooo"; // what in English?
     }
 
+    /*
     // ===================================================================================
     //                                                                           Hit Point
     //                                                                           =========
@@ -71,6 +81,7 @@ public class Zombie extends Animal {
     protected void downHitPoint() {
         // do nothing, infinity hit point
     }
+    */
 
     // ===================================================================================
     //                                                                            Accessor

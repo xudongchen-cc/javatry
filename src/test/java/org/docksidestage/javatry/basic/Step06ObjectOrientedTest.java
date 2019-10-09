@@ -26,7 +26,16 @@ import org.docksidestage.bizfw.basic.objanimal.Zombie;
 import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
+import org.docksidestage.javatry.basic.st6.dbms.St6MySql;
+import org.docksidestage.javatry.basic.st6.dbms.St6PostgreSql;
+import org.docksidestage.javatry.basic.st6.dbms.St6Sql;
+import org.docksidestage.javatry.basic.st6.os.St6OperationMac;
+import org.docksidestage.javatry.basic.st6.os.St6OperationOldWindows;
+import org.docksidestage.javatry.basic.st6.os.St6OperationSystem;
+import org.docksidestage.javatry.basic.st6.os.St6OperationWindows;
 import org.docksidestage.unit.PlainTestCase;
+
+import org.docksidestage.bizfw.basic.objanimal.Bird;
 
 /**
  * The test of object-oriented. <br>
@@ -330,8 +339,15 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * Make concrete class of Animal, which is not FastRunner, in "objanimal" package. (implementation is as you like) <br>
      * (FastRunnerではないAnimalクラスのコンクリートクラスをobjanimalパッケージに作成しましょう (実装はお好きなように))
      */
+    //concrete clas　子クラスに近い
     public void test_objectOriented_polymorphism_makeConcrete() {
         // your confirmation code here
+        Animal animal = new Bird();
+        BarkedSound sound = animal.bark();
+        String sea = sound.getBarkWord();
+        log(sea); //chu-
+        int land = animal.getHitPoint();
+        log(land); //7
     }
 
     /**
@@ -340,6 +356,12 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_polymorphism_makeInterface() {
         // your confirmation code here
+        Bird animalBird = new Bird();
+        Dog animalDog = new Dog();
+        //should be defined not as Animal(class),
+        //maybe because Animal(class) is not an implementation of Fly(interface)
+        log(animalBird.doFly()); //true
+        log(animalDog.doFly());//false
     }
 
     // ===================================================================================
@@ -351,6 +373,10 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_generalization_extractToAbstract() {
         // your confirmation code here
+        St6Sql mySQl = new St6MySql();
+        St6Sql postgreSql = new St6PostgreSql();
+        log(mySQl.buildPagingQuery(5,5));
+        log(postgreSql.buildPagingQuery(5,5));
     }
 
     /**
@@ -359,6 +385,12 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_specialization_extractToConcrete() {
         // your confirmation code here
+        St6OperationSystem operationSystemMac = new St6OperationMac("mynameMac");
+        St6OperationSystem operationSystemWindows = new St6OperationWindows("mynameWin");
+        St6OperationSystem operationSystemOldWindows = new St6OperationOldWindows("mynameOldWin");
+        log(operationSystemMac.buildUserResourcePath("pathMac"));
+        log(operationSystemWindows.buildUserResourcePath("pathWin"));
+        log(operationSystemOldWindows.buildUserResourcePath("pathOldWin"));
     }
 
     // ===================================================================================
@@ -370,6 +402,24 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_withDelegation() {
         // your confirmation code here
+        Animal animalDog = new Dog();
+        Animal animalCat = new Cat();
+        Animal animalZoo = new Zombie();
+        BarkedSound soundDog = animalDog.bark();
+        BarkedSound soundCat = animalCat.bark();
+        BarkedSound soundZoo = animalZoo.bark();
+        String seaDog = soundDog.getBarkWord();
+        String seaCat = soundCat.getBarkWord();
+        String seaZoo = soundZoo.getBarkWord();
+        log(seaDog); //wan
+        log(seaCat); //nya-
+        log(seaZoo); //uooo
+        int landDog = animalDog.getHitPoint();
+        int landCat = animalCat.getHitPoint();
+        int landZoo = animalZoo.getHitPoint();
+        log(landDog); //7
+        log(landCat); //5
+        log(landZoo); //-1
     }
 
     /**
