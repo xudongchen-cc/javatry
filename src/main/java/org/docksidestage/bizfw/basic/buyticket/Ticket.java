@@ -26,6 +26,8 @@ public interface Ticket{
     int getLeftInParkTime();
     String getTicketType();
 
+    boolean isAlreadyIn();
+
     /*
 
     // ===================================================================================

@@ -139,7 +139,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // [buy one-day passport]
         //
         // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-        // #fixme you if step05 has been finished, you can use this code by jflute (2019/06/15)
+        // #done you if step05 has been finished, you can use this code by jflute (2019/06/15)
         // _/_/_/_/_/_/_/_/_/_/
         //Ticket ticket = booth.buyOneDayPassport(10000);
         //(changed after 5)booth.buyOneDayPassport(10000); // as temporary, remove if you finished steo05
@@ -148,8 +148,6 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Ticket ticket = null;
         try{
             TicketBuyResult passportResult = booth.buyOneDayPassport(handedMoney);
-            //TicketBuyResult passportResult = booth.buyTwoDayPassport(handedMoney);
-            //TicketBuyResult passportResult = booth.buyFourDayPassport(handedMoney);
             ticket = passportResult.getTicket();
         }catch (TicketBooth.TicketShortMoneyException continued) {
             log("Failed to buy passport: money=" + handedMoney, continued);
@@ -194,15 +192,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     }
 
     private void saveBuyingHistory(TicketBooth booth, Ticket ticket) {
-        //(changed after 5)
-        /*
         if (ticket.isAlreadyIn()) {
-            // only logging here (normally e.g. DB insert)
-            doShowTicketBooth(booth);
-            doShowYourTicket(ticket);
-        }
-        */
-        if (ticket.getLeftInParkTime()==0) {
             // only logging here (normally e.g. DB insert)
             doShowTicketBooth(booth);
             doShowYourTicket(ticket);
@@ -214,8 +204,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     }
 
     private void doShowYourTicket(Ticket ticket) {
-        //(changed after 5)log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), ticket.isAlreadyIn());
-        log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), true);
+        log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), ticket.isAlreadyIn());
     }
 
     // ===================================================================================
@@ -332,7 +321,6 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         Animal seaanimal = new Dog();
         boolean sea = seaanimal instanceof FastRunner;
         log(sea);//true
-
     }
 
     // ===================================================================================

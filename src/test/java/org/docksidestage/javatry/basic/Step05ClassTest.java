@@ -110,15 +110,17 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_letsFix_makeMethod_twoday() {
         // comment out after making the method
-        // TicketBooth booth = new TicketBooth();
-        // int money = 14000;
-        // int change = booth.buyTwoDayPassport(money);
-        // Integer sea = booth.getSalesProceeds() + change;
-        // log(sea); // should be same as money
+        TicketBooth booth = new TicketBooth();
+        int money = 14000;
+        //int change = booth.buyTwoDayPassport(money);(changed)
+        TicketBuyResult twoDayPassportResult = booth.buyTwoDayPassport(money);
+        int change = twoDayPassportResult.getChange();
+        Integer sea = booth.getSalesProceeds() + change;
+        log(sea); // should be same as money
 
         // and show two-day passport quantity here
-        // log(booth.getSalesProceeds());
-        // log(booth.getQuantity_two());
+        log(booth.getSalesProceeds());
+        log(booth.getQuantityTwo());
     }
 
     /**
@@ -140,12 +142,14 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_return_ticket() {
         // comment out after modifying the method
-        // TicketBooth booth = new TicketBooth();
-        // Ticket oneDayPassport = booth.buyOneDayPassport(10000);
-        // log(oneDayPassport.getDisplayPrice()); // should be same as one-day price
-        // log(oneDayPassport.isAlreadyIn()); // should be false
-        // oneDayPassport.doInPark();
-        // log(oneDayPassport.isAlreadyIn()); // should be true
+        TicketBooth booth = new TicketBooth();
+        // Ticket oneDayPassport = booth.buyOneDayPassport(10000);(changed)
+        TicketBuyResult oneDayPassportResult = booth.buyOneDayPassport(10000);
+        Ticket oneDayPassport = oneDayPassportResult.getTicket();
+        log(oneDayPassport.getDisplayPrice()); // should be same as one-day price
+        log(oneDayPassport.isAlreadyIn()); // should be false
+        oneDayPassport.doInPark();
+        log(oneDayPassport.isAlreadyIn()); // should be true
     }
 
     /**
@@ -168,6 +172,14 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_type() {
         // your confirmation code here
+        TicketBooth booth = new TicketBooth();
+        int handedMonty = 15000;
+        TicketBuyResult resultOneDay = booth.buyOneDayPassport(handedMonty);
+        Ticket oneDayTicket = resultOneDay.getTicket();
+        TicketBuyResult resultTwoDay = booth.buyTwoDayPassport(handedMonty);
+        Ticket twoDayTicket = resultTwoDay.getTicket();
+        log(oneDayTicket.getTicketType());//one day
+        log(twoDayTicket.getTicketType());//two day
     }
 
     // ===================================================================================
@@ -191,6 +203,36 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_useInterface() {
         // your confirmation code here
+        TicketBooth booth = new TicketBooth();
+        int handedMoney = 40000;
+        try{
+            TicketBuyResult passportResultOne = booth.buyOneDayPassport(handedMoney);
+            TicketBuyResult passportResultTwo = booth.buyTwoDayPassport(handedMoney);
+            Ticket passportOne = passportResultOne.getTicket();
+            Ticket passportTwo = passportResultTwo.getTicket();
+            log(passportOne.getDisplayPrice() + passportResultOne.getChange());//40000
+            log(passportOne.getDisplayPrice() + passportResultOne.getChange());//40000
+            log(passportOne.getTicketType());//one
+            log(passportTwo.getTicketType());//two
+
+            try {
+                passportOne.doInPark();
+                log("succeed in go into the park oneday");
+                passportOne.doInPark();
+                log("succeed in go into the park oneday");
+                passportTwo.doInPark();
+                log("succeed in go into the park twoday");
+                passportTwo.doInPark();
+                log("succeed in go into the park twoday");
+                passportTwo.doInPark();
+                log("succeed in go into the park twoday");
+            }catch (IllegalStateException continued) {
+                log("Failed to go into the park", continued);
+            }
+
+        }catch (TicketShortMoneyException continued) {
+            log("Failed to buy passport: money=" + handedMoney, continued);
+        }
     }
 
     /**
@@ -199,6 +241,33 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_wonder() {
         // your confirmation code here
+        TicketBooth booth = new TicketBooth();
+        int handedMoney = 40000;
+        try{
+            TicketBuyResult passportResult = booth.buyFourDayPassport(handedMoney);
+            Ticket passport = passportResult.getTicket();
+            int change = passportResult.getChange();
+            log(passport.getDisplayPrice() + change);//40000
+            log(passport.getTicketType());//four
+
+            try {
+                passport.doInPark();
+                log("succeed in go into the park");
+                passport.doInPark();
+                log("succeed in go into the park");
+                passport.doInPark();
+                log("succeed in go into the park");
+                passport.doInPark();
+                log("succeed in go into the park");//ここまでsuccess
+                passport.doInPark();
+                log("succeed in go into the park");
+            }catch (IllegalStateException continued) {
+                log("Failed to go into the park", continued);
+            }
+
+        }catch (TicketShortMoneyException continued) {
+            log("Failed to buy passport: money=" + handedMoney, continued);
+        }
     }
 
     /**

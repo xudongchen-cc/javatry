@@ -32,10 +32,12 @@ public class Dog extends Animal implements FastRunner {
     // ===================================================================================
     //                                                                               Bark
     //                                                                              ======
+    @Override
     protected String getBarkWord() {
         return "wan"; // bow? in English
     }
 
+    @Override
     public void run() {
         // dummy implementation
         //logger.debug("...Running now");
