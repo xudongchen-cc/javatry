@@ -21,7 +21,7 @@ import org.docksidestage.unit.PlainTestCase;
 
 import org.docksidestage.bizfw.basic.buyticket.Ticket;
 import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
-// TODO done xudong remove unused import. use shortcut key (option + control + o) by katashin (2019/10/09)
+// done xudong remove unused import. use shortcut key (option + control + o) by katashin (2019/10/09)
 // 不要なimportは消しましょう。ショートカットキーもあるよ(option + control + o)
 
 /**
