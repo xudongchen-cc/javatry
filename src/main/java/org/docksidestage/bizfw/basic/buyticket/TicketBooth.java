@@ -120,6 +120,8 @@ public class TicketBooth {
 
     // TODO xudong accumulating to buyPassport method is good. define constant value of type as static final string is better.
     // buyPassportにまとまったのはいいね。 typeのための定数を、static final stringとして宣言できるといいね。
+    // TODO xudong method parameter is presented as lowercase as a habit. so price is better than PRICE. by katashin (2019/10/09)
+    // メソッドの引数は習慣として小文字が多いです。priceの方がいいね。
     private int buyPassport(int quantity, int handedMoney, int PRICE, String type)
     {
         if (quantity <= 0) {
