@@ -29,11 +29,15 @@ public class TicketBooth {
     private static final int MAX_QUANTITY_TWO = 10;
     private static final int TWO_DAY_PRICE = 13200;
 
+    private static final int MAX_QUANTITY_FOUR = 10;
+    private static final int FOUR_DAY_PRICE = 22400;
+
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
     private int quantity1 = MAX_QUANTITY;
     private int quantity2 = MAX_QUANTITY_TWO;
+    private int quantity4 = MAX_QUANTITY_FOUR;
     private Integer salesProceeds;
 
     // ===================================================================================
@@ -45,7 +49,7 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Buy Ticket
     //                                                                          ==========
-    public Ticket buyOneDayPassport(int handedMoney) {
+    public TicketBuyResult buyOneDayPassport(int handedMoney) {
         /*
         if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
@@ -78,9 +82,8 @@ public class TicketBooth {
             }
         }
         */
-        //return buyPassport(quantity1, handedMoney, ONE_DAY_PRICE);
-        buyPassport(quantity1, handedMoney, ONE_DAY_PRICE);
-        return new Ticket(ONE_DAY_PRICE);
+        int change = buyPassport(quantity1, handedMoney, ONE_DAY_PRICE, "ONE");
+        return new TicketBuyResult(ONE_DAY_PRICE, change, "ONE");
     }
 
     public TicketBuyResult buyTwoDayPassport(int handedMoney)
@@ -103,14 +106,19 @@ public class TicketBooth {
             return handedMoney - TWO_DAY_PRICE;
         }
         */
-        //return buyPassport(quantity2, handedMoney, TWO_DAY_PRICE);
-        int change = buyPassport(quantity2, handedMoney, TWO_DAY_PRICE);
-        return new TicketBuyResult(TWO_DAY_PRICE, change);
+        int change = buyPassport(quantity2, handedMoney, TWO_DAY_PRICE, "TWO");
+        return new TicketBuyResult(TWO_DAY_PRICE, change, "TWO");
     }
 
-    private int buyPassport(int quantity, int handedMoney, int PRICE)
+    public TicketBuyResult buyFourDayPassport(int handedMoney)
     {
-        if (quantity1 <= 0) {
+        int change = buyPassport(quantity4, handedMoney, FOUR_DAY_PRICE, "FOUR");
+        return new TicketBuyResult(FOUR_DAY_PRICE, change, "FOUR");
+    }
+
+    private int buyPassport(int quantity, int handedMoney, int PRICE, String type)
+    {
+        if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
         else if (handedMoney < PRICE) {
@@ -118,7 +126,12 @@ public class TicketBooth {
         }
         else
         {
-            --quantity1;
+            if(type.equals("ONE"))
+                --quantity1;
+            if(type.equals("TWO"))
+                --quantity2;
+            if(type.equals("FOUR"))
+                --quantity4;
             if (salesProceeds != null) {
                 salesProceeds = salesProceeds + PRICE;
             } else {
@@ -153,8 +166,12 @@ public class TicketBooth {
         return quantity1;
     }
 
-    public int getQuantity_two() {
+    public int getQuantityTwo() {
         return quantity2;
+    }
+
+    public int getQuantityFour() {
+        return quantity4;
     }
 
     public Integer getSalesProceeds() {

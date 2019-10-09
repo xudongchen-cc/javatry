@@ -3,16 +3,16 @@ package org.docksidestage.bizfw.basic.buyticket;
 /**
  * @author xudong
  */
-public class OneDayTicket implements Ticket {
+public class TwoDayTicket implements Ticket{
 
     private final int displayPrice;
     private int leftInParkTime;
     private String ticketType;
 
-    public OneDayTicket(int price)
+    public TwoDayTicket(int price)
     {
         displayPrice = price;
-        leftInParkTime = 1;
+        leftInParkTime = 2;
         ticketType = "OneDayTicket";
     }
 

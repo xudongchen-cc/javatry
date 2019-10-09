@@ -133,7 +133,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         // _/_/_/_/_/_/_/_/_/_/
         //Ticket ticket = booth.buyOneDayPassport(10000);
         booth.buyOneDayPassport(10000); // as temporary, remove if you finished steo05
-        Ticket ticket = new Ticket(7400); // also here
+        //(changed after 5)Ticket ticket = new Ticket(7400); // also here
 
         // *buyOneDayPassport() has this process:
         //if (quantity <= 0) {
@@ -156,7 +156,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //
         // [do in park now!!!]
         //
-        ticket.doInPark();
+        //(changed after 5)ticket.doInPark();
 
         // *doInPark() has this process:
         //if (alreadyIn) {
@@ -167,15 +167,18 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //
         // [final process]
         //
-        saveBuyingHistory(booth, ticket);
+        //(changed after 5)saveBuyingHistory(booth, ticket);
     }
 
     private void saveBuyingHistory(TicketBooth booth, Ticket ticket) {
+        //(changed after 5)
+        /*
         if (ticket.isAlreadyIn()) {
             // only logging here (normally e.g. DB insert)
             doShowTicketBooth(booth);
             doShowYourTicket(ticket);
         }
+        */
     }
 
     private void doShowTicketBooth(TicketBooth booth) {
@@ -183,7 +186,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     }
 
     private void doShowYourTicket(Ticket ticket) {
-        log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), ticket.isAlreadyIn());
+        //(changed after 5)log("Your Ticket: displayPrice={}, alreadyIn={}", ticket.getDisplayPrice(), ticket.isAlreadyIn());
     }
 
     // ===================================================================================

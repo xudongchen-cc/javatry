@@ -19,10 +19,11 @@ package org.docksidestage.bizfw.basic.buyticket;
  * @author jflute
  */
 // public class Ticket {
-interface Ticket{
+public interface Ticket{
 
     void doInPark();
     int getDisplayPrice();
+    String getTicketType();
 
     /*
 

@@ -20,6 +20,9 @@ import org.docksidestage.bizfw.basic.buyticket.TicketBooth.TicketShortMoneyExcep
 import org.docksidestage.unit.PlainTestCase;
 
 import org.docksidestage.bizfw.basic.buyticket.Ticket;
+import org.docksidestage.bizfw.basic.buyticket.OneDayTicket;
+import org.docksidestage.bizfw.basic.buyticket.TwoDayTicket;
+import org.docksidestage.bizfw.basic.buyticket.FourDayTicket;
 import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
 
 /**
@@ -137,12 +140,12 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_return_ticket() {
         // comment out after modifying the method
-        TicketBooth booth = new TicketBooth();
-        Ticket oneDayPassport = booth.buyOneDayPassport(10000);
-        log(oneDayPassport.getDisplayPrice()); // should be same as one-day price
-        log(oneDayPassport.isAlreadyIn()); // should be false
-        oneDayPassport.doInPark();
-        log(oneDayPassport.isAlreadyIn()); // should be true
+        // TicketBooth booth = new TicketBooth();
+        // Ticket oneDayPassport = booth.buyOneDayPassport(10000);
+        // log(oneDayPassport.getDisplayPrice()); // should be same as one-day price
+        // log(oneDayPassport.isAlreadyIn()); // should be false
+        // oneDayPassport.doInPark();
+        // log(oneDayPassport.isAlreadyIn()); // should be true
     }
 
     /**
@@ -151,12 +154,12 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_return_whole() {
         // comment out after modifying the method
-        TicketBooth booth = new TicketBooth();
-        int handedMoney = 20000;
-        TicketBuyResult twoDayPassportResult = booth.buyTwoDayPassport(handedMoney);
-        Ticket twoDayPassport = twoDayPassportResult.getTicket();
-        int change = twoDayPassportResult.getChange();
-        log(twoDayPassport.getDisplayPrice() + change); // should be same as money
+        // TicketBooth booth = new TicketBooth();
+        // int handedMoney = 20000;
+        // TicketBuyResult twoDayPassportResult = booth.buyTwoDayPassport(handedMoney);
+        // Ticket twoDayPassport = twoDayPassportResult.getTicket();
+        // int change = twoDayPassportResult.getChange();
+        // log(twoDayPassport.getDisplayPrice() + change); // should be same as money
     }
 
     /**
@@ -204,5 +207,22 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_yourRefactoring() {
         // write confirmation code here
+        TicketBooth booth = new TicketBooth();
+        int handedMoney = 1000;
+        try{
+            //TicketBuyResult passportResult = booth.buyOneDayPassport(handedMoney);
+            //TicketBuyResult passportResult = booth.buyTwoDayPassport(handedMoney);
+            TicketBuyResult passportResult = booth.buyFourDayPassport(handedMoney);
+            Ticket passport = passportResult.getTicket();
+            int change = passportResult.getChange();
+            log(passport.getDisplayPrice() + change);
+            log(passport.getTicketType());
+        }catch (TicketShortMoneyException continued) {
+            log("Failed to buy passport: money=" + handedMoney, continued);
+        }
+        log(booth.getQuantity());
+        log(booth.getQuantityTwo());
+        log(booth.getQuantityFour());
+        log(booth.getSalesProceeds());
     }
 }
