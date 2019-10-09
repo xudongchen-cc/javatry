@@ -208,7 +208,7 @@ public class Step05ClassTest extends PlainTestCase {
     public void test_class_moreFix_yourRefactoring() {
         // write confirmation code here
         TicketBooth booth = new TicketBooth();
-        int handedMoney = 1000;
+        int handedMoney = 40000;
         try{
             //TicketBuyResult passportResult = booth.buyOneDayPassport(handedMoney);
             //TicketBuyResult passportResult = booth.buyTwoDayPassport(handedMoney);
@@ -217,6 +217,22 @@ public class Step05ClassTest extends PlainTestCase {
             int change = passportResult.getChange();
             log(passport.getDisplayPrice() + change);
             log(passport.getTicketType());
+
+            try {
+                passport.doInPark();
+                log("succeed in go into the park");
+                passport.doInPark();
+                log("succeed in go into the park");
+                passport.doInPark();
+                log("succeed in go into the park");
+                passport.doInPark();
+                log("succeed in go into the park");
+                passport.doInPark();
+                log("succeed in go into the park");
+            }catch (IllegalStateException continued) {
+                log("Failed to go into the park", continued);
+            }
+
         }catch (TicketShortMoneyException continued) {
             log("Failed to buy passport: money=" + handedMoney, continued);
         }
