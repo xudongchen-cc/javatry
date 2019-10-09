@@ -1,5 +1,8 @@
 package org.docksidestage.bizfw.basic.buyticket;
 
+/**
+ * @author xudong
+ */
 public class TicketBuyResult {
     private int price;
     private int change;

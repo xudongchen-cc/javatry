@@ -42,7 +42,7 @@ import org.docksidestage.bizfw.basic.objanimal.Bird;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author xudong
  */
 public class Step06ObjectOrientedTest extends PlainTestCase {
 
