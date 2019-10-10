@@ -24,16 +24,16 @@ public abstract class St6OperationSystem {
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
-    private static final String OS_TYPE_MAC = "Mac";
-    private static final String OS_TYPE_WINDOWS = "Windows";
-    private static final String OS_TYPE_OLD_WINDOWS = "OldWindows";
+    //private static final String OS_TYPE_MAC = "Mac";
+    //private static final String OS_TYPE_WINDOWS = "Windows";
+    //private static final String OS_TYPE_OLD_WINDOWS = "OldWindows";
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
     //private final String loginId;
+    //private String osType;
     protected final String loginId;
-    private String osType;
 
     // ===================================================================================
     //                                                                         Constructor

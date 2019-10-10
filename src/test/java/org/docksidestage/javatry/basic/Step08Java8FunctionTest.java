@@ -68,7 +68,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         log("...Executing lambda expression style callback");
         helpCallbackConsumer(stage -> log(stage + ": " + title));
 
-        // your answer? => 
+        // your answer? => the same
 
         // cannot reassign because it is used at callback process
         //name = "wave";
@@ -84,7 +84,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
             log(stage);
         });
         log("lost river");
-        // your answer? => 
+        // your answer? => harbor, broadway, dockside, hangar, lost river
     }
 
     private class St8BasicConsumer implements Consumer<String> {
