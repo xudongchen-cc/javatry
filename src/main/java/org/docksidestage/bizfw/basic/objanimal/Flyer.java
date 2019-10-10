@@ -3,7 +3,7 @@ package org.docksidestage.bizfw.basic.objanimal;
 /**
  * @author xudong
  */
-public interface Fly {
+public interface Flyer {
 
     boolean doFly();
 }

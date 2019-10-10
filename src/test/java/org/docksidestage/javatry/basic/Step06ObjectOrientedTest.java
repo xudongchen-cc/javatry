@@ -19,11 +19,7 @@ import org.docksidestage.bizfw.basic.buyticket.Ticket;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
 import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
 import org.docksidestage.bizfw.basic.buyticket.TicketType;
-import org.docksidestage.bizfw.basic.objanimal.Animal;
-import org.docksidestage.bizfw.basic.objanimal.BarkedSound;
-import org.docksidestage.bizfw.basic.objanimal.Cat;
-import org.docksidestage.bizfw.basic.objanimal.Dog;
-import org.docksidestage.bizfw.basic.objanimal.Zombie;
+import org.docksidestage.bizfw.basic.objanimal.*;
 import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
@@ -35,8 +31,6 @@ import org.docksidestage.javatry.basic.st6.os.St6OperationOldWindows;
 import org.docksidestage.javatry.basic.st6.os.St6OperationSystem;
 import org.docksidestage.javatry.basic.st6.os.St6OperationWindows;
 import org.docksidestage.unit.PlainTestCase;
-
-import org.docksidestage.bizfw.basic.objanimal.Bird;
 
 /**
  * The test of object-oriented. <br>
@@ -340,7 +334,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * Make concrete class of Animal, which is not FastRunner, in "objanimal" package. (implementation is as you like) <br>
      * (FastRunnerではないAnimalクラスのコンクリートクラスをobjanimalパッケージに作成しましょう (実装はお好きなように))
      */
-    //concrete clas　子クラスに近い
+    //concrete class　子クラスに近い,abstractではない子クラス
     public void test_objectOriented_polymorphism_makeConcrete() {
         // your confirmation code here
         Animal animal = new Bird();
@@ -357,12 +351,13 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_polymorphism_makeInterface() {
         // your confirmation code here
-        Bird animalBird = new Bird();
-        Dog animalDog = new Dog();
+        Flyer animalBird = new Bird();
+        //Fly animalDog = new Dog();//Dog is not an implement of Fly
+
         //should be defined not as Animal(class),
-        //maybe because Animal(class) is not an implementation of Fly(interface)
+        //because Animal(class) is not an implementation of Fly(interface)
+        //but can be defined as Fly(the interface)!
         log(animalBird.doFly()); //true
-        log(animalDog.doFly());//false
     }
 
     // ===================================================================================

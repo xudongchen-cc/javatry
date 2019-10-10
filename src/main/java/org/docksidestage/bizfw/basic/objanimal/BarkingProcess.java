@@ -19,8 +19,7 @@ public class BarkingProcess {
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public BarkingProcess(String backWord)
-    {
+    public BarkingProcess(String backWord) {
         hitPoint = getInitialHitPoint();
         this.barkWord = backWord;
     }
@@ -58,25 +57,23 @@ public class BarkingProcess {
     //                                                                           Hit Point
     //                                                                           =========
     private void downHitPoint() {
-        if(barkWord.equals("uooo-"))
+        if (barkWord.equals("uooo-"))
             return;
 
         tempDownHitPoint();
-        if(barkWord.equals("nya-") && hitPoint % 2 == 0)
+        if (barkWord.equals("nya-") && hitPoint % 2 == 0)
             tempDownHitPoint();
     }
 
-    private void tempDownHitPoint()
-    {
+    private void tempDownHitPoint() {
         --hitPoint;
         if (hitPoint == 0) {
             throw new IllegalStateException("I'm very tired, so I want to sleep" + barkWord);
         }
     }
 
-    public int getHitPoint()
-    {
-        if(barkWord.equals("uooo"))
+    public int getHitPoint() {
+        if (barkWord.equals("uooo"))
             return -1;
         else
             return hitPoint;

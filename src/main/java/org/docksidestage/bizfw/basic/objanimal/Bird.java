@@ -4,8 +4,9 @@ package org.docksidestage.bizfw.basic.objanimal;
  * The object for bird.
  * @author xudong
  */
-public class Bird extends Animal implements Fly{
-    public Bird(){};
+public class Bird extends Animal implements Flyer {
+    public Bird() {
+    }
 
     @Override
     protected String getBarkWord() {
@@ -13,8 +14,7 @@ public class Bird extends Animal implements Fly{
     }
 
     @Override
-    public boolean doFly()
-    {
+    public boolean doFly() {
         return true;
     }
 }

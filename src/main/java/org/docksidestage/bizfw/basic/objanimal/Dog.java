@@ -22,7 +22,7 @@ import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
  * @author jflute
  * @author xudong
  */
-public class Dog extends Animal implements FastRunner,Fly {
+public class Dog extends Animal implements FastRunner {
 
     // ===================================================================================
     //                                                                         Constructor
@@ -39,9 +39,6 @@ public class Dog extends Animal implements FastRunner,Fly {
     }
 
     @Override
-    public void run() { }
-    public boolean doFly()
-    {
-        return false;
+    public void run() {
     }
 }

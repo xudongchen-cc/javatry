@@ -15,6 +15,9 @@
  */
 package org.docksidestage.javatry.basic;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.docksidestage.bizfw.basic.supercar.SupercarClient;
 import org.docksidestage.javatry.basic.st7.St7ConstructorChallengeException;
 import org.docksidestage.unit.PlainTestCase;
@@ -24,7 +27,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りに実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author xudong
  */
 public class Step07ExceptionTest extends PlainTestCase {
 
@@ -85,7 +88,6 @@ public class Step07ExceptionTest extends PlainTestCase {
     //          <- Exception <- RuntimeException
     //                <-            <-
 
-
     // ===================================================================================
     //                                                                   Checked Exception
     //                                                                   =================
@@ -94,6 +96,15 @@ public class Step07ExceptionTest extends PlainTestCase {
      * (new java.io.File(".") の canonical path を取得してログに表示、I/Oエラーはメッセージとスタックトレースを代わりに)
      */
     public void test_exception_checkedException_basic() {
+        File newFile = new java.io.File(".");
+        try {
+            log(newFile.getCanonicalPath());
+            //newFile.createNewFile();
+        } catch (IOException e) {
+            System.out.println("asd");
+            log(e.getMessage());
+            log(e.getCause());
+        }
     }
 
     // ===================================================================================
@@ -114,9 +125,26 @@ public class Step07ExceptionTest extends PlainTestCase {
             Throwable cause = e.getCause();
             sea = cause.getMessage();
             land = cause.getClass().getSimpleName();
-            log(sea); // your answer? => 
-            log(land); // your answer? => 
-            log(e); // your answer? => 
+
+            log(sea); // your answer? => Failed to call the third help method: -1
+            log(land); // your answer? => IllegalArgumentException?
+            log(e); // your answer? => 最後はjava.lang.NumberFormatException: For input string: "piari"
+            //スタックトレース(stack-trace)が出る
+
+            log(e.getCause());//この例外になる原因、この場合は１が拾った２からの例外
+            log(e.getMessage());//Failed to call the second help method: -1
+            log(e.getClass());//class java.lang.IllegalStateException
+            log(e.getClass().getSimpleName());//IllegalStateException
+
+            log(e.getCause().getMessage());//Failed to call the third help method: -1
+            log(e.getCause().getClass().getSimpleName());//IllegalArgumentException
+
+            log(e.getCause().getCause().getMessage());//For input string: "piari"
+            log(e.getCause().getCause().getClass().getSimpleName());//NumberFormatException
+            //NumberFormatExceptionが出って、
+            //2はそれを拾って、IllegalArgumentExceptionを出す
+            //1はそれを拾って、IllegalStateExceptionを出す
+            //最後にここでそれを拾った、eになる
         }
     }
 
@@ -165,6 +193,7 @@ public class Step07ExceptionTest extends PlainTestCase {
             //
             //
             // _/_/_/_/_/_/_/_/_/_/
+            log(e.getMessage());
         }
     }
 
@@ -201,7 +230,7 @@ public class Step07ExceptionTest extends PlainTestCase {
         try {
             helpThrowIllegalState();
         } catch (IllegalStateException e) {
-            throw new St7ConstructorChallengeException("Failed to do something.");
+            throw new St7ConstructorChallengeException("Failed to do something.", e);
         }
     }
 
