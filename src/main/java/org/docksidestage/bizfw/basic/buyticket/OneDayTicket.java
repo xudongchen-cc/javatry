@@ -7,35 +7,30 @@ public class OneDayTicket implements Ticket {
 
     private final int displayPrice;
     private int leftInParkTime;
-    private String ticketType;
+    private TicketType ticketType;
 
-    public OneDayTicket(int price)
-    {
-        displayPrice = price;
-        leftInParkTime = 1;
-        ticketType = "OneDayTicket";
+    public OneDayTicket(TicketType type) {
+        displayPrice = type.getPrice();
+        leftInParkTime = type.getInPark();
+        ticketType = type;
     }
 
-    public void doInPark()
-    {
-        if (leftInParkTime==0) {
+    public void doInPark() {
+        if (leftInParkTime == 0) {
             throw new IllegalStateException("Already in park by this ticket: displayedPrice=" + displayPrice);
         }
         leftInParkTime--;
     }
 
-    public int getDisplayPrice()
-    {
+    public int getDisplayPrice() {
         return displayPrice;
     }
 
-    public int getLeftInParkTime()
-    {
+    public int getLeftInParkTime() {
         return leftInParkTime;
     }
 
-    public String getTicketType()
-    {
+    public TicketType getTicketType() {
         return ticketType;
     }
 

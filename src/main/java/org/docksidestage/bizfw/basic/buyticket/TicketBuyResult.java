@@ -4,36 +4,30 @@ package org.docksidestage.bizfw.basic.buyticket;
  * @author xudong
  */
 public class TicketBuyResult {
-    private int price;
     private int change;
-    private String type;
+    private TicketType type;
 
-    public TicketBuyResult(int price, int change, String type) {
-        this.price = price;
+    public TicketBuyResult(int change, TicketType type) {
         this.change = change;
         this.type = type;
     }
 
     public Ticket getTicket() {
-        if (type.equals("ONE"))
-            return new OneDayTicket(price);
-        else if (type.equals("TWO"))
-            return new TwoDayTicket(price);
-        else if (type.equals("FOUR"))
-            return new FourDayTicket(price);
+        if (type.equals(TicketType.Oneday))
+            return new OneDayTicket(type);
+        else if (type.equals(TicketType.Twoday))
+            return new PluralDayTicket(type);
+        else if (type.equals(TicketType.Fourday))
+            return new PluralDayTicket(type);
         else
             return null;
-    }
-
-    public int getPrice() {
-        return price;
     }
 
     public int getChange() {
         return change;
     }
 
-    public String getType() {
+    public TicketType getType() {
         return type;
     }
 }

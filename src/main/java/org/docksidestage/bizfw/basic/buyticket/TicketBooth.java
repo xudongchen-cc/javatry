@@ -52,62 +52,13 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Buy Ticket
     //                                                                          ==========
+    /*
     public TicketBuyResult buyOneDayPassport(int handedMoney) {
-        /*
-        if (quantity <= 0) {
-            throw new TicketSoldOutException("Sold out");
-        }
-        --quantity;
-        if (handedMoney < ONE_DAY_PRICE) {
-            throw new TicketShortMoneyException("Short money: " + handedMoney);
-        }
-        if (salesProceeds != null) {
-            salesProceeds = salesProceeds + handedMoney;
-        } else {
-            salesProceeds = handedMoney;
-        }
-        */
-
-        /*
-        if (quantity1 <= 0) {
-            throw new TicketSoldOutException("Sold out");
-        }
-        else if (handedMoney < ONE_DAY_PRICE) {
-            throw new TicketShortMoneyException("Short money: " + handedMoney);
-        }
-        else
-        {
-            --quantity1;
-            if (salesProceeds != null) {
-                salesProceeds = salesProceeds + ONE_DAY_PRICE;
-            } else {
-                salesProceeds = ONE_DAY_PRICE;
-            }
-        }
-        */
         int change = buyPassport(quantity1, handedMoney, ONE_DAY_PRICE, TicketType.Oneday);
         return new TicketBuyResult(ONE_DAY_PRICE, change, "ONE");
     }
 
     public TicketBuyResult buyTwoDayPassport(int handedMoney) {
-        /*
-        if (quantity2 <= 0) {
-            throw new TicketSoldOutException("Sold out");
-        }
-        else if (handedMoney < TWO_DAY_PRICE) {
-            throw new TicketShortMoneyException("Short money: " + handedMoney);
-        }
-        else
-        {
-            --quantity2;
-            if (salesProceeds != null) {
-                salesProceeds = salesProceeds + TWO_DAY_PRICE;
-            } else {
-                salesProceeds = TWO_DAY_PRICE;
-            }
-            return handedMoney - TWO_DAY_PRICE;
-        }
-        */
         int change = buyPassport(quantity2, handedMoney, TWO_DAY_PRICE, TicketType.Twoday);
         return new TicketBuyResult(TWO_DAY_PRICE, change, "TWO");
     }
@@ -116,31 +67,52 @@ public class TicketBooth {
         int change = buyPassport(quantity4, handedMoney, FOUR_DAY_PRICE, TicketType.Fourday);
         return new TicketBuyResult(FOUR_DAY_PRICE, change, "FOUR");
     }
+    */
 
-    // TODO xudong accumulating to buyPassport method is good. define constant value of type as static final string is better.
+    // TODO done xudong accumulating to buyPassport method is good. define constant value of type as static final string is better.
     // buyPassportにまとまったのはいいね。 typeのための定数を、static final stringとして宣言できるといいね。
     // ならば、static　final　stringではなく、直接にenumを使っても大丈夫ですか。
     // done xudong method parameter is presented as lowercase as a habit. so price is better than PRICE. by katashin (2019/10/09)
     // メソッドの引数は習慣として小文字が多いです。priceの方がいいね。
-    private int buyPassport(int quantity, int handedMoney, int price, TicketType type) {
+    public TicketBuyResult buyPassport(int handedMoney, TicketType type) {
+
+        int quantity;
+        if (type.equals(TicketType.Oneday))
+            quantity = quantity1;
+        else if (type.equals(TicketType.Twoday))
+            quantity = quantity2;
+        else if (type.equals(TicketType.Fourday))
+            quantity = quantity4;
+        else
+            throw new TicketTypeUndifinedException("Not existed ticket type: " + type);
+
         if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
-        } else if (handedMoney < price) {
+        } else if (handedMoney < type.getPrice()) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
-        } else {
-            if (type.equals(TicketType.Oneday))
-                --quantity1;
-            if (type.equals(TicketType.Twoday))
-                --quantity2;
-            if (type.equals(TicketType.Fourday))
-                --quantity4;
-            if (salesProceeds != null) {
-                salesProceeds = salesProceeds + price;
-            } else {
-                salesProceeds = price;
-            }
-            return handedMoney - price;
         }
+
+        if (type.equals(TicketType.Oneday))
+            --quantity1;
+        else if (type.equals(TicketType.Twoday))
+            --quantity2;
+        else if (type.equals(TicketType.Fourday))
+            --quantity4;
+
+        if (salesProceeds != null) {
+            salesProceeds = salesProceeds + type.getPrice();
+        } else {
+            salesProceeds = type.getPrice();
+        }
+
+        if (type.equals(TicketType.Oneday))
+            return new TicketBuyResult(handedMoney - type.getPrice(), type);
+        else if (type.equals(TicketType.Twoday))
+            return new TicketBuyResult(handedMoney - type.getPrice(), type);
+        else if (type.equals(TicketType.Fourday))
+            return new TicketBuyResult(handedMoney - type.getPrice(), type);
+        else
+            return null;
     }
 
     public static class TicketSoldOutException extends RuntimeException {
@@ -161,19 +133,28 @@ public class TicketBooth {
         }
     }
 
+    public static class TicketTypeUndifinedException extends RuntimeException {
+
+        private static final long serialVersionUID = 1L;
+
+        public TicketTypeUndifinedException(String msg) {
+            super(msg);
+        }
+
+    }
+
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========
-    public int getQuantity() {
-        return quantity1;
-    }
-
-    public int getQuantityTwo() {
-        return quantity2;
-    }
-
-    public int getQuantityFour() {
-        return quantity4;
+    public int getQuantity(TicketType type) {
+        if (type.equals(TicketType.Oneday))
+            return quantity1;
+        else if (type.equals(TicketType.Twoday))
+            return quantity2;
+        else if (type.equals(TicketType.Fourday))
+            return quantity4;
+        else
+            throw new TicketTypeUndifinedException("Not existed ticket type: " + type);
     }
 
     public Integer getSalesProceeds() {

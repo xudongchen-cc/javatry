@@ -18,6 +18,7 @@ package org.docksidestage.javatry.basic;
 import org.docksidestage.bizfw.basic.buyticket.Ticket;
 import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
 import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
+import org.docksidestage.bizfw.basic.buyticket.TicketType;
 import org.docksidestage.bizfw.basic.objanimal.Animal;
 import org.docksidestage.bizfw.basic.objanimal.BarkedSound;
 import org.docksidestage.bizfw.basic.objanimal.Cat;
@@ -156,7 +157,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         int handedMoney = 10000;
         Ticket ticket = null;
         try {
-            TicketBuyResult passportResult = booth.buyOneDayPassport(handedMoney);
+            TicketBuyResult passportResult = booth.buyPassport(handedMoney, TicketType.Oneday);
             ticket = passportResult.getTicket();
         } catch (TicketBooth.TicketShortMoneyException continued) {
             log("Failed to buy passport: money=" + handedMoney, continued);
@@ -209,7 +210,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
     }
 
     private void doShowTicketBooth(TicketBooth booth) {
-        log("Ticket Booth: quantity={}, salesProceeds={}", booth.getQuantity(), booth.getSalesProceeds());
+        log("Ticket Booth: quantity={}, salesProceeds={}", booth.getQuantity(TicketType.Oneday), booth.getSalesProceeds());
     }
 
     private void doShowYourTicket(Ticket ticket) {
