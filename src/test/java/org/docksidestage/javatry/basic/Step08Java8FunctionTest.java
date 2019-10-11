@@ -33,7 +33,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りに実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author xudong
  */
 public class Step08Java8FunctionTest extends PlainTestCase {
 
@@ -249,21 +249,34 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         String bonvo = facade.selectMember(2).flatMap(mb -> {
             return mb.getWithdrawal();
         }).map(wdl -> wdl.oldgetPrimaryReason()).orElse("*no reason");
+        //bonvo = *no reason
 
         String dstore = facade.selectMember(3) //
-                .flatMap(mb -> mb.getWithdrawal()) //
-                .flatMap(wdl -> wdl.getPrimaryReason()) //
+                .flatMap(mb -> {
+                    log("come here 1");
+                    return mb.getWithdrawal();
+                }) // これがempty Optionalの場合なら
+
+                .flatMap(wdl -> {
+                    log("come here 2");
+                    return wdl.getPrimaryReason();
+                }) // たぶんこれが実行されていない
                 .orElse("*no reason");
+        //dstore = *no reason?
 
         Integer amba = facade.selectMember(2).flatMap(mb -> mb.getWithdrawal()).map(wdl -> wdl.getWithdrawalId()).orElse(-1);
+        //amba = 12
 
-        log(sea); // your answer? => 
-        log(land); // your answer? => 
-        log(piari); // your answer? => 
-        log(bonvo); // your answer? => 
-        log(dstore); // your answer? => 
-        log(amba); // your answer? => 
+        log(sea); // your answer? => "music"
+        log(land); // your answer? => "music"
+        log(piari); // your answer? => "music"
+        log(bonvo); // your answer? => *no reason
+        log(dstore); // your answer? => *no reason
+        log(amba); // your answer? => 12
     }
+    //mapとflatMapの違い
+    //・map(T -> R)は、Tのデータ型をRのデータ型に１：１の変換です。
+    //・flatMap(T -> Stream<R>)は、Tのデータ型からStream<R>に１：Nの変換です。
 
     /**
      * What string is sea variables at the method end? <br>
@@ -281,8 +294,9 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         } catch (IllegalStateException e) {
             sea = e.getMessage();
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => wave
     }
+    //Optionalを使えば、if nullの判断がなくなる、null.orElseみたいな処理ができます？
 
     // ===================================================================================
     //                                                                          Stream API
@@ -300,14 +314,14 @@ public class Step08Java8FunctionTest extends PlainTestCase {
             }
         }
         String sea = oldfilteredNameList.toString();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => [broadway, dockside]
 
         List<String> filteredNameList = memberList.stream() //
                 .filter(mb -> mb.getWithdrawal().isPresent()) //
                 .map(mb -> mb.getMemberName()) //
                 .collect(Collectors.toList());
         String land = filteredNameList.toString();
-        log(land); // your answer? => 
+        log(land); // your answer? => [broadway, dockside]
     }
 
     /**
@@ -323,8 +337,16 @@ public class Step08Java8FunctionTest extends PlainTestCase {
                 .mapToInt(pur -> pur.getPurchasePrice())
                 .distinct()
                 .sum();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 600
     }
+    //filter 条件を満たす場合だけの処理 list.stream().filter(x -> x >= 2)
+    //distinct 重複する値を排除する処理 list.stream().distinct()
+    //limit 扱うデータ件数を制限する処理 list.stream().limit(3)
+    //sorted 順番に並べる処理 list.stream().sorted()
+    //以上全部中間処理
+
+    //Stream生成⇒中間処理⇒終端処理の順番で実施します。
+    //https://qiita.com/kumazo/items/104fa685da8705b8cfd8
 
     // *Stream API will return at Step12 again, it's worth the wait!
 }

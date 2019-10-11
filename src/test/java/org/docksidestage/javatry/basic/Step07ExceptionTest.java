@@ -87,6 +87,8 @@ public class Step07ExceptionTest extends PlainTestCase {
     //Throwable <- Error <-
     //          <- Exception <- RuntimeException
     //                <-            <-
+    //          IO, SQL, ...    NullPopinter, IllegalState, ...
+    //    check 例外　どうしようも無い例外
 
     // ===================================================================================
     //                                                                   Checked Exception
