@@ -17,6 +17,7 @@ package org.docksidestage.javatry.basic;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 
 import org.docksidestage.bizfw.basic.supercar.SupercarClient;
 import org.docksidestage.javatry.basic.st7.St7ConstructorChallengeException;
@@ -42,6 +43,7 @@ public class Step07ExceptionTest extends PlainTestCase {
         IllegalStateException exp = new IllegalStateException("mystic");
         String sea = exp.getMessage();
         log(sea); // your answer? => mystic
+        //messageを入れて欲しい
     }
 
     // ===================================================================================
@@ -213,6 +215,7 @@ public class Step07ExceptionTest extends PlainTestCase {
             log("*No hint here for training.", e);
         }
     }
+    //stringだけではなく、引き数も入れったらいいです。
 
     // ===================================================================================
     //                                                                           Challenge

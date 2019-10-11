@@ -15,7 +15,9 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
@@ -25,7 +27,7 @@ import org.docksidestage.unit.PlainTestCase;
  * The test of String with color-box, using Stream API you can. <br>
  * Show answer by log() for question of javadoc.
  * @author jflute
- * @author your_name_here
+ * @author xudong
  */
 public class Step12StreamStringTest extends PlainTestCase {
 
@@ -43,7 +45,8 @@ public class Step12StreamStringTest extends PlainTestCase {
                 .map(colorBox -> colorBox.getColor().getColorName())
                 .map(colorName -> colorName.length() + " (" + colorName + ")")
                 .orElse("*not found");
-        log(answer);
+        log(answer);//5 (green)
+        //色の名前の文字数は5
     }
 
     /**
@@ -51,6 +54,15 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長い文字列は？)
      */
     public void test_length_findMax() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<String> allStrings = colorBoxList.stream()
+                .map(colorBox -> colorBox.getSpaceList())
+                .flatMap(colorSpace -> colorSpace.stream())
+                .map(colorSpace -> colorSpace.toString())
+                .collect(Collectors.toList());
+        int longest = allStrings.stream().mapToInt(str -> str.length()).max().orElse(-1);
+        String sea = allStrings.stream().filter(str -> str.length() == longest).findFirst().orElse(null);
+        log(sea);//the first one
     }
 
     /**
@@ -58,6 +70,15 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の中で、一番長いものと短いものの差は何文字？)
      */
     public void test_length_findMaxMinDiff() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<String> allStrings = colorBoxList.stream()
+                .map(colorBox -> colorBox.getSpaceList())
+                .flatMap(colorSpace -> colorSpace.stream())
+                .map(colorSpace -> colorSpace.toString())
+                .collect(Collectors.toList());
+        int longest = allStrings.stream().mapToInt(str -> str.length()).max().orElse(-1);
+        int shortest = allStrings.stream().mapToInt(str -> str.length()).min().orElse(-1);
+        log(longest - shortest);
     }
 
     // has small #adjustmemts from ClassicStringTest
@@ -67,6 +88,17 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスに入ってる値 (文字列以外はtoString()) の中で、二番目に長い文字列は？ (Streamでのソートありで))
      */
     public void test_length_findSecondMax() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<String> allStrings = colorBoxList.stream()
+                .map(colorBox -> colorBox.getSpaceList())
+                .flatMap(colorSpace -> colorSpace.stream())
+                .map(colorSpace -> colorSpace.toString())
+                .collect(Collectors.toList());
+        List<Integer> sizes = allStrings.stream().map(str -> str.length()).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        //.sorted(Comparator.reverseOrder())//降順
+        //.sorted(Comparator.reverseOrder())// 昇順
+        String sea = allStrings.stream().filter(str -> str.length() == sizes.get(1)).findFirst().orElse(null);
+        log(sea);//the first one
     }
 
     /**
@@ -74,6 +106,16 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の長さの合計は？)
      */
     public void test_length_calculateLengthSum() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        if (!colorBoxList.isEmpty()) {
+            List<String> allStrings = colorBoxList.stream()
+                    .map(colorBox -> colorBox.getSpaceList())
+                    .flatMap(colorSpace -> colorSpace.stream())
+                    .map(colorSpace -> colorSpace.toString())
+                    .collect(Collectors.toList());
+            int sumLength = allStrings.stream().mapToInt(str -> str.length()).sum();
+            log(sumLength);
+        }
     }
 
     /**
@@ -81,6 +123,14 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
     public void test_length_findMaxColorSize() {
+        List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
+        List<String> AllColors = colorBoxes.stream()
+                .map(colorBox -> colorBox.getColor())
+                .map(boxColor -> boxColor.getColorName())
+                .collect(Collectors.toList());
+        int longest = AllColors.stream().mapToInt(colorStr -> colorStr.length()).distinct().max().orElse(-1);
+        String sea = AllColors.stream().filter(str -> str.length() == longest).findFirst().orElse(null);
+        log(sea);//the first one
     }
 
     // ===================================================================================
@@ -91,6 +141,10 @@ public class Step12StreamStringTest extends PlainTestCase {
      * ("Water" で始まる文字列をしまっているカラーボックスの色は？)
      */
     public void test_startsWith_findFirstWord() {
+        List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
+        colorBoxes.stream()
+                .filter(colorBox -> colorBox.getSpaceList().stream().anyMatch(boxSpace -> boxSpace.toString().startsWith("Water")))
+                .forEach(colorBox -> log(colorBox.getColor().getColorName()));
     }
 
     /**
@@ -98,6 +152,10 @@ public class Step12StreamStringTest extends PlainTestCase {
      * ("front" で終わる文字列をしまっているカラーボックスの色は？)
      */
     public void test_endsWith_findLastWord() {
+        List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
+        colorBoxes.stream()
+                .filter(colorBox -> colorBox.getSpaceList().stream().anyMatch(boxSpace -> boxSpace.toString().endsWith("front")))
+                .forEach(colorBox -> log(colorBox.getColor().getColorName()));
     }
 
     // ===================================================================================
@@ -108,6 +166,12 @@ public class Step12StreamStringTest extends PlainTestCase {
      * (カラーボックスに入ってる "front" で終わる文字列で、最初の "front" は何文字目から始まる？)
      */
     public void test_indexOf_findIndex() {
+        List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
+        colorBoxes.stream()
+                .map(colorBox -> colorBox.getSpaceList())
+                .flatMap(colorSpace -> colorSpace.stream())
+                .filter(colorSpace -> colorSpace.toString().endsWith("front"))
+                .forEach(colorSpace -> log(colorSpace.toString().indexOf("front")));
     }
 
     /**
