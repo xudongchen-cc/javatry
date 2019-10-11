@@ -68,7 +68,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         log("...Executing lambda expression style callback");
         helpCallbackConsumer(stage -> log(stage + ": " + title));
 
-        // your answer? => the same
+        // your answer? => the same(broadway, dockside:over, hangar)
 
         // cannot reassign because it is used at callback process
         //name = "wave";
@@ -170,6 +170,12 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         log(supplied);
     }
 
+    //引き数は関数（みたい）の場合
+    //Consume<A>　引き数ありA　返り値なし　accept
+    //Supplier<B>　引き数なし　返り値ありB  get
+    //Function<A, B>　引き数ありA　返り値ありB  apply
+    //Predicate<A>　Function<A, Boolean>に近い
+
     // ===================================================================================
     //                                                                            Optional
     //                                                                            ========
@@ -180,15 +186,15 @@ public class Step08Java8FunctionTest extends PlainTestCase {
     public void test_java8_optional_concept() {
         St8Member oldmember = new St8DbFacade().oldselectMember(1);
         if (oldmember != null) {
-            log(oldmember.getMemberId(), oldmember.getMemberName());
+            log(oldmember.getMemberId(), oldmember.getMemberName());//1, broadway
         }
         Optional<St8Member> optMember = new St8DbFacade().selectMember(1);
         if (optMember.isPresent()) {
             St8Member member = optMember.get();
-            log(member.getMemberId(), member.getMemberName());
+            log(member.getMemberId(), member.getMemberName());//1, broadway
         }
         optMember.ifPresent(member -> {
-            log(member.getMemberId(), member.getMemberName());
+            log(member.getMemberId(), member.getMemberName());//1, broadway
         });
         // your answer? => the same
     }
@@ -201,10 +207,10 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         Optional<St8Member> optMember = new St8DbFacade().selectMember(1);
         if (optMember.isPresent()) {
             St8Member member = optMember.get();
-            log(member.getMemberId(), member.getMemberName());
+            log(member.getMemberId(), member.getMemberName());//1, broadway
         }
         optMember.ifPresent(member -> {
-            log(member.getMemberId(), member.getMemberName());
+            log(member.getMemberId(), member.getMemberName());//1, broadway
         });
         // your answer? => yes
     }
@@ -228,6 +234,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         } else {
             sea = "*no reason2";
         }
+        //sea = "music"
 
         Optional<St8Member> optMemberFirst = facade.selectMember(1);
         String land = optMemberFirst.flatMap(mb -> mb.getWithdrawal()).flatMap(wdl -> wdl.getPrimaryReason()).orElse("*no reason");
@@ -237,6 +244,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         }).map(wdl -> {
             return wdl.oldgetPrimaryReason();
         }).orElse("*no reason");
+        //land = piari = "music"
 
         String bonvo = facade.selectMember(2).flatMap(mb -> {
             return mb.getWithdrawal();
