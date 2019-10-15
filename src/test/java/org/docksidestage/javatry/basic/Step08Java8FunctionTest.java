@@ -81,7 +81,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
     public void test_java8_lambda_callback_order() {
         log("harbor");
         helpCallbackConsumer(stage -> {
-            log(stage);
+            log(stage);//この辺は、acceptが出たときに実行する
         });
         log("lost river");
         // your answer? => harbor, broadway, dockside, hangar, lost river
@@ -238,6 +238,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
 
         Optional<St8Member> optMemberFirst = facade.selectMember(1);
         String land = optMemberFirst.flatMap(mb -> mb.getWithdrawal()).flatMap(wdl -> wdl.getPrimaryReason()).orElse("*no reason");
+        //orElseがない場合、Optionalになる
 
         String piari = optMemberFirst.flatMap(mb -> {
             return mb.getWithdrawal();
