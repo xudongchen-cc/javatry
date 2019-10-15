@@ -17,6 +17,8 @@ package org.docksidestage.javatry.colorbox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
@@ -128,20 +130,16 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * Which value (toString() if non-string) has second-max length in color-boxes? (without sort) <br>
      * (カラーボックスに入ってる値 (文字列以外はtoString()) の中で、二番目に長い文字列は？ (ソートなしで))
      */
-    public void test_length_findSecondMax() {//the last one
+    public void test_length_findSecondMax() {//the last one//monaiari
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         int longest = 0;
         int longest2 = 0;
         String sea = null;
+        String land2 = null;
         if (!colorBoxList.isEmpty()) {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
-                        continue;
                     String str = boxSpace.toString();
                     if (str.length() > longest) {
                         longest = str.length();
@@ -192,7 +190,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * Which color name has max length in color-boxes? <br>
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
-    public void test_length_findMaxColorSize() {//the last one
+    public void test_length_findMaxColorSize() {//the last one(set hash set)
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         int longest = 0;
         String longestColor = null;
@@ -535,64 +533,91 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = value ; ... }" という形式で表示すると？)
      */
     public void test_showMap_flat() {
-        /*
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-        int lengths = 0;
+        List<String> results = new ArrayList<>();
         if (!colorBoxList.isEmpty()) {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
                     if (boxSpace.getContent() instanceof java.util.Map) {
-                        //Map content = (YourPrivateRoom.DevilBox) boxSpace.getContent();
-                        //log()
+                        String result = "map:{ ";
+                        Map content = (Map) boxSpace.getContent();
+                        Set<String> keys = content.keySet();
+                        for (String key : keys) {
+                            result = result + key + " = " + content.get(key) + "; ";
+                            //最後;ある
+                        }
+                        result = result + " }";
+                        results.add(result);
                     }
                 }
             }
-
-            if (lengths != 0)
-                log(lengths);
+            if (!results.isEmpty())
+                for (String result : results)
+                    log(result);
             else {
                 log("*not found");
             }
+        } else {
+            log("*not found");
         }
-         else{
+    }
+
+    /**
+     * What string is converted to style "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" from java.util.Map in color-boxes? <br>
+     * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" という形式で表示すると？)
+     */
+    public void test_showMap_nested() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<String> results = new ArrayList<>();
+        if (!colorBoxList.isEmpty()) {
+            for (ColorBox colorBox : colorBoxList) {
+                List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
+                for (BoxSpace boxSpace : boxSpaceList) {
+                    if (boxSpace.getContent() instanceof java.util.Map) {
+                        String result = "map:{ ";
+                        Map content = (Map) boxSpace.getContent();
+                        Set<String> keys = content.keySet();
+                        for (String key : keys) {
+                            result = result + key + " = " + content.get(key) + "; ";
+                            //最後;ある
+                        }
+                        result = result + " }";
+                        results.add(result);
+                    }
+                }
+            }
+            if (!results.isEmpty())
+                for (String result : results)
+                    log(result);
+            else {
                 log("*not found");
             }
-        }
-        
-         */
-    }
-
-        /**
-         * What string is converted to style "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" from java.util.Map in color-boxes? <br>
-         * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" という形式で表示すると？)
-         */
-        public void test_showMap_nested () {
-            List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-            if (!colorBoxes.isEmpty()) {
-            }
-        }
-
-        // ===================================================================================
-        //                                                                           Good Luck
-        //                                                                           =========
-        /**
-         * What string of toString() is converted from text of SecretBox class in upper space on the "white" color-box to java.util.Map? <br>
-         * (whiteのカラーボックスのupperスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
-         */
-        public void test_parseMap_flat () {
-            List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-            if (!colorBoxes.isEmpty()) {
-            }
-        }
-
-        /**
-         * What string of toString() is converted from text of SecretBox class in both middle and lower spaces on the "white" color-box to java.util.Map? <br>
-         * (whiteのカラーボックスのmiddleおよびlowerスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
-         */
-        public void test_parseMap_nested () {
-            List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-            if (!colorBoxes.isEmpty()) {
-            }
+        } else {
+            log("*not found");
         }
     }
+
+    // ===================================================================================
+    //                                                                           Good Luck
+    //                                                                           =========
+    /**
+     * What string of toString() is converted from text of SecretBox class in upper space on the "white" color-box to java.util.Map? <br>
+     * (whiteのカラーボックスのupperスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
+     */
+    public void test_parseMap_flat() {
+        List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
+        if (!colorBoxes.isEmpty()) {
+        }
+    }
+
+    /**
+     * What string of toString() is converted from text of SecretBox class in both middle and lower spaces on the "white" color-box to java.util.Map? <br>
+     * (whiteのカラーボックスのmiddleおよびlowerスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
+     */
+    public void test_parseMap_nested() {
+        List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
+        if (!colorBoxes.isEmpty()) {
+        }
+    }
+}

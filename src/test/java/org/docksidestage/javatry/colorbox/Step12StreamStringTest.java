@@ -98,8 +98,6 @@ public class Step12StreamStringTest extends PlainTestCase {
         List<String> allStrings = colorBoxList.stream()
                 .map(colorBox -> colorBox.getSpaceList())
                 .flatMap(colorSpace -> colorSpace.stream())
-                .filter(colorSpace -> colorSpace.getContent()!=null)
-                .filter(colorSpace ->colorSpace.getContent().getClass().getSimpleName().equals("String"))
                 .map(colorSpace -> colorSpace.toString())
                 .collect(Collectors.toList());
         List<Integer> sizes = allStrings.stream().map(str -> str.length()).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
@@ -280,10 +278,11 @@ public class Step12StreamStringTest extends PlainTestCase {
 
     public void test_forTest() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-        ColorBox box = colorBoxes.get(1);
+        ColorBox box = colorBoxes.get(6);
         List<BoxSpace> space = box.getSpaceList();
         space.stream().forEach(sp -> {
             log(sp.toString());
+            //log(((YourPrivateRoom.SecretBox)sp.getContent()).getText());
         });
         /*
         space.stream().forEach(sp -> {
