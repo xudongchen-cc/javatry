@@ -15,9 +15,7 @@
  */
 package org.docksidestage.javatry.colorbox;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
@@ -303,19 +301,18 @@ public class Step12StreamStringTest extends PlainTestCase {
      */
     public void test_welcomeToDevil() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-        List<BoxSpace> devilBoxes = colorBoxes.stream()
+        List<YourPrivateRoom.DevilBox> devilBoxes = colorBoxes.stream()
                 .map(colorBox -> colorBox.getSpaceList())
                 .flatMap(colorSpace -> colorSpace.stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof YourPrivateRoom.DevilBox)
+                .map(colorSpace -> (YourPrivateRoom.DevilBox) colorSpace.getContent())
                 .collect(Collectors.toList());
         devilBoxes.stream().forEach(devilBox -> {
-            YourPrivateRoom.DevilBox content = (YourPrivateRoom.DevilBox) devilBox.getContent();
-            content.wakeUp();
-            content.allowMe();
-            content.open();
+            devilBox.wakeUp();
+            devilBox.allowMe();
+            devilBox.open();
         });
         int sumLength = devilBoxes.stream()
-                .map(devilBox -> (YourPrivateRoom.DevilBox) devilBox.getContent())
                 .map(devilBox -> {
             try {
                 return devilBox.getText();
@@ -336,15 +333,31 @@ public class Step12StreamStringTest extends PlainTestCase {
      */
     public void test_showMap_flat() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-        List<Map> mapSpace = colorBoxes.stream()
+        List<Map> mapSpaces = colorBoxes.stream()
                 .map(colorBox -> colorBox.getSpaceList())
                 .flatMap(colorSpace -> colorSpace.stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof java.util.Map)
                 .map(colorSpace -> (Map)colorSpace.getContent())
                 .collect(Collectors.toList());
-
-
-
+        List<String> results = new ArrayList<>();
+        for(Map mapspace :mapSpaces)
+        {
+            String result = "map:{ ";
+            Set<String> keys = mapspace.keySet();
+            for (String key : keys) {
+                result = result + key + " = " + mapspace.get(key) + " ; ";
+                //最後;ある
+            }
+            result = result.substring(0, result.lastIndexOf(";"));
+            result = result + "}";
+            results.add(result);
+        }
+        if (!results.isEmpty())
+            for (String result : results)
+                log(result);
+        else {
+            log("*not found");
+        }
     }
 
     /**
@@ -353,13 +366,38 @@ public class Step12StreamStringTest extends PlainTestCase {
      */
     public void test_showMap_nested() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-        List<Map> mapSpace = colorBoxes.stream()
+        List<Map> mapSpaces = colorBoxes.stream()
                 .map(colorBox -> colorBox.getSpaceList())
                 .flatMap(colorSpace -> colorSpace.stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof java.util.Map)
                 .map(colorSpace -> (Map)colorSpace.getContent())
                 .collect(Collectors.toList());
-        
+        List<String> results = new ArrayList<>();
+        for(Map mapspace :mapSpaces)
+        {
+            results.add(getMapResult(mapspace));
+        }
+        if (!results.isEmpty())
+            for (String result : results)
+                log(result);
+        else {
+            log("*not found");
+        }
+    }
+
+    private String getMapResult(Map content) {
+        String result = "map:{ ";
+        Set<String> keys = content.keySet();
+        for (String key : keys) {
+            if (content.get(key) instanceof java.util.Map)
+                result = result + key + " = " + getMapResult((Map) content.get(key)) + " ; ";
+            else
+                result = result + key + " = " + content.get(key) + " ; ";
+            //最後;ある
+        }
+        result = result.substring(0, result.lastIndexOf(";"));
+        result = result + "}";
+        return result;
     }
 
     // ===================================================================================

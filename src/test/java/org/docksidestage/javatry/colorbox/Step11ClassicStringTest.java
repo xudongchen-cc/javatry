@@ -15,10 +15,8 @@
  */
 package org.docksidestage.javatry.colorbox;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
@@ -545,10 +543,11 @@ public class Step11ClassicStringTest extends PlainTestCase {
                         Map content = (Map) boxSpace.getContent();
                         Set<String> keys = content.keySet();
                         for (String key : keys) {
-                            result = result + key + " = " + content.get(key) + "; ";
+                            result = result + key + " = " + content.get(key) + " ; ";
                             //最後;ある
                         }
-                        result = result + " }";
+                        result = result.substring(0, result.lastIndexOf(";"));
+                        result = result + "}";
                         results.add(result);
                     }
                 }
@@ -596,12 +595,13 @@ public class Step11ClassicStringTest extends PlainTestCase {
         Set<String> keys = content.keySet();
         for (String key : keys) {
             if (content.get(key) instanceof java.util.Map)
-                result = result + key + " = " + getMapResult((Map) content.get(key)) + "; ";
+                result = result + key + " = " + getMapResult((Map) content.get(key)) + " ; ";
             else
-                result = result + key + " = " + content.get(key) + "; ";
+                result = result + key + " = " + content.get(key) + " ; ";
             //最後;ある
         }
-        result = result + " }";
+        result = result.substring(0, result.lastIndexOf(";"));
+        result = result + "}";
         return result;
     }
 
@@ -614,7 +614,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      */
     public void test_parseMap_flat() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-        List<String> results = new ArrayList<>();
+        Map<String, Object> resutlMaps = new LinkedHashMap<String, Object>();
         if (!colorBoxList.isEmpty()) {
             /*
             ColorBox whiteBox;
@@ -626,10 +626,21 @@ public class Step11ClassicStringTest extends PlainTestCase {
             BoxSpace boxSpace = ((StandardColorBox) colorBoxList.get(4)).getUpperSpace();
             YourPrivateRoom.SecretBox secretBox = (YourPrivateRoom.SecretBox) boxSpace.getContent();
             String secretString = secretBox.getText();
+            //log(secretString);
+            String secretMap = secretString.substring(secretString.indexOf("map:{") + 5, secretString.lastIndexOf("}"));
+            //log(secretMap);
+            List<String> inMaps = Arrays.asList(secretMap.split(";"));
+            for (String inMap : inMaps) {
+                String[] parts = inMap.split("=");
+                String key = parts[0].substring(1, parts[0].length() - 1);
+                String value = parts[1].substring(1, parts[1].length() - 1);
+                //log(key);
+                //log(value);
+                resutlMaps.put(key, value);
+            }
 
-            if (!results.isEmpty())
-                for (String result : results)
-                    log(result);
+            if (!resutlMaps.isEmpty())
+                log(resutlMaps.toString());
             else {
                 log("*not found");
             }
@@ -659,6 +670,8 @@ public class Step11ClassicStringTest extends PlainTestCase {
             YourPrivateRoom.SecretBox secretBoxLower = (YourPrivateRoom.SecretBox) boxSpaceLower.getContent();
             String secretStringMiddle = secretBoxMiddle.getText();
             String secretStringLower = secretBoxLower.getText();
+            log(secretStringMiddle);
+            log(secretStringLower);
 
             if (!results.isEmpty())
                 for (String result : results)
@@ -669,5 +682,25 @@ public class Step11ClassicStringTest extends PlainTestCase {
         } else {
             log("*not found");
         }
+    }
+
+    private Map getMap(String secretString) {
+        Map<String, Object> resutlMaps = new LinkedHashMap<String, Object>();
+        String secretMap = secretString.substring(secretString.indexOf("map:{") + 5, secretString.lastIndexOf("}"));
+        //log(secretMap);
+        if (secretMap.indexOf("map:") == -1) {
+            List<String> inMaps = Arrays.asList(secretMap.split(";"));
+            for (String inMap : inMaps) {
+                String[] parts = inMap.split("=");
+                String key = parts[0].substring(1, parts[0].length() - 1);
+                String value = parts[1].substring(1, parts[1].length() - 1);
+                //log(key);
+                //log(value);
+                resutlMaps.put(key, value);
+            }
+        } else {
+
+        }
+        return resutlMaps;
     }
 }
