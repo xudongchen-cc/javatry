@@ -22,6 +22,7 @@ import java.util.Set;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
+import org.docksidestage.bizfw.colorbox.impl.StandardColorBox;
 import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
@@ -130,7 +131,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * Which value (toString() if non-string) has second-max length in color-boxes? (without sort) <br>
      * (カラーボックスに入ってる値 (文字列以外はtoString()) の中で、二番目に長い文字列は？ (ソートなしで))
      */
-    public void test_length_findSecondMax() {//the last one//monaiari
+    public void test_length_findSecondMax() {//the last one//monaiari　TODO　修正
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         int longest = 0;
         int longest2 = 0;
@@ -190,7 +191,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * Which color name has max length in color-boxes? <br>
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
-    public void test_length_findMaxColorSize() {//the last one(set hash set)
+    public void test_length_findMaxColorSize() {//the last one(set hash set)TODO　修正
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         int longest = 0;
         String longestColor = null;
@@ -290,7 +291,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * What number character is starting with first "front" of string ending with "front" in color-boxes? <br>
      * (カラーボックスに入ってる "front" で終わる文字列で、最初の "front" は何文字目から始まる？)
      */
-    public void test_indexOf_findIndex() {
+    public void test_indexOf_findIndex() {//答えだけではなく、提示の文字も一緒に出ればいい
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<Integer> positions = new ArrayList<>();
         if (!colorBoxList.isEmpty()) {
@@ -575,15 +576,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
                     if (boxSpace.getContent() instanceof java.util.Map) {
-                        String result = "map:{ ";
-                        Map content = (Map) boxSpace.getContent();
-                        Set<String> keys = content.keySet();
-                        for (String key : keys) {
-                            result = result + key + " = " + content.get(key) + "; ";
-                            //最後;ある
-                        }
-                        result = result + " }";
-                        results.add(result);
+                        results.add(getMapResult((Map) boxSpace.getContent()));
                     }
                 }
             }
@@ -598,6 +591,20 @@ public class Step11ClassicStringTest extends PlainTestCase {
         }
     }
 
+    private String getMapResult(Map content) {
+        String result = "map:{ ";
+        Set<String> keys = content.keySet();
+        for (String key : keys) {
+            if (content.get(key) instanceof java.util.Map)
+                result = result + key + " = " + getMapResult((Map) content.get(key)) + "; ";
+            else
+                result = result + key + " = " + content.get(key) + "; ";
+            //最後;ある
+        }
+        result = result + " }";
+        return result;
+    }
+
     // ===================================================================================
     //                                                                           Good Luck
     //                                                                           =========
@@ -606,8 +613,28 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (whiteのカラーボックスのupperスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_flat() {
-        List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-        if (!colorBoxes.isEmpty()) {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<String> results = new ArrayList<>();
+        if (!colorBoxList.isEmpty()) {
+            /*
+            ColorBox whiteBox;
+            for (ColorBox colorBox : colorBoxList) {
+                if(colorBox.getColor().getColorName().equals("white"))
+                    whiteBox = colorBox;
+            }
+            */
+            BoxSpace boxSpace = ((StandardColorBox) colorBoxList.get(4)).getUpperSpace();
+            YourPrivateRoom.SecretBox secretBox = (YourPrivateRoom.SecretBox) boxSpace.getContent();
+            String secretString = secretBox.getText();
+
+            if (!results.isEmpty())
+                for (String result : results)
+                    log(result);
+            else {
+                log("*not found");
+            }
+        } else {
+            log("*not found");
         }
     }
 
@@ -616,8 +643,31 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (whiteのカラーボックスのmiddleおよびlowerスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_nested() {
-        List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-        if (!colorBoxes.isEmpty()) {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<String> results = new ArrayList<>();
+        if (!colorBoxList.isEmpty()) {
+            /*
+            ColorBox whiteBox;
+            for (ColorBox colorBox : colorBoxList) {
+                if(colorBox.getColor().getColorName().equals("white"))
+                    whiteBox = colorBox;
+            }
+            */
+            BoxSpace boxSpaceMiddle = ((StandardColorBox) colorBoxList.get(4)).getMiddleSpace();
+            BoxSpace boxSpaceLower = ((StandardColorBox) colorBoxList.get(4)).getLowerSpace();
+            YourPrivateRoom.SecretBox secretBoxMiddle = (YourPrivateRoom.SecretBox) boxSpaceMiddle.getContent();
+            YourPrivateRoom.SecretBox secretBoxLower = (YourPrivateRoom.SecretBox) boxSpaceLower.getContent();
+            String secretStringMiddle = secretBoxMiddle.getText();
+            String secretStringLower = secretBoxLower.getText();
+
+            if (!results.isEmpty())
+                for (String result : results)
+                    log(result);
+            else {
+                log("*not found");
+            }
+        } else {
+            log("*not found");
         }
     }
 }
