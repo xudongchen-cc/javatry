@@ -659,8 +659,9 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (whiteのカラーボックスのmiddleおよびlowerスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_nested() {
+        //今の例では問題ない、もしこのような例が出るなら、問題がある
+        //key1=value, key2=map:{}, key3=map:{}
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-        List<String> results = new ArrayList<>();
         if (!colorBoxList.isEmpty()) {
             /*
             ColorBox whiteBox;
@@ -678,22 +679,19 @@ public class Step11ClassicStringTest extends PlainTestCase {
             log(secretStringMiddle);
             log(secretStringLower);
 
-            if (!results.isEmpty())
-                for (String result : results)
-                    log(result);
-            else {
-                log("*not found");
-            }
+            log(getMap(secretStringMiddle));
+            log(getMap(secretStringLower));
+
         } else {
             log("*not found");
         }
     }
 
-    private Map getMap(String secretString) {
+    private Map getMap(String secretString) {//input starts with "map:{"
         Map<String, Object> resutlMaps = new LinkedHashMap<String, Object>();
         String secretMap = secretString.substring(secretString.indexOf("map:{") + 5, secretString.lastIndexOf("}"));
         //log(secretMap);
-        if (secretMap.indexOf("map:") == -1) {
+        if (secretMap.indexOf("map:{") == -1) {
             List<String> inMaps = Arrays.asList(secretMap.split(";"));
             for (String inMap : inMaps) {
                 String[] parts = inMap.split("=");
@@ -704,7 +702,40 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 resutlMaps.put(key, value);
             }
         } else {
+            int mapStart = secretMap.lastIndexOf(";", secretMap.indexOf("map:{"));
+            int mapEnd = secretMap.indexOf(";", secretMap.lastIndexOf("}")) + 1;
+            //log(mapEnd);
+            //log(secretMap);
+            List<String> inMaps1 = Arrays.asList(secretMap.substring(0, mapStart).split(";"));
+            for (String inMap : inMaps1) {
+                String[] parts = inMap.split("=");
+                String key = parts[0].substring(1, parts[0].length() - 1);
+                String value = parts[1].substring(1, parts[1].length() - 1);
+                //log(key);
+                //log(value);
+                resutlMaps.put(key, value);
+            }
 
+            String middleString;
+            if(mapEnd == 0)
+                middleString = secretMap.substring(mapStart + 1);
+            else
+                middleString = secretMap.substring(mapStart + 1, mapEnd - 1);
+            String middleKey = middleString.substring(1, middleString.indexOf("=") - 1);
+            Object middleValue = getMap(middleString.substring(middleString.indexOf("=") + 2));
+            resutlMaps.put(middleKey, middleValue);
+
+            if (mapEnd != 0) {
+                List<String> inMaps2 = Arrays.asList(secretMap.substring(mapEnd).split(";"));
+                for (String inMap : inMaps2) {
+                    String[] parts = inMap.split("=");
+                    String key = parts[0].substring(1, parts[0].length() - 1);
+                    String value = parts[1].substring(1, parts[1].length() - 1);
+                    //log(key);
+                    //log(value);
+                    resutlMaps.put(key, value);
+                }
+            }
         }
         return resutlMaps;
     }

@@ -274,24 +274,6 @@ public class Step12StreamStringTest extends PlainTestCase {
                 });
     }
 
-    public void test_forTest() {
-        List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-        ColorBox box = colorBoxes.get(6);
-        List<BoxSpace> space = box.getSpaceList();
-        space.stream().forEach(sp -> {
-            log(sp.toString());
-            //log(((YourPrivateRoom.SecretBox)sp.getContent()).getText());
-        });
-        /*
-        space.stream().forEach(sp -> {
-            log(sp.getContent().getClass().getName().equals("java.io.File"));
-        });
-        */
-        space.stream().forEach(sp -> {
-            log(sp.getContent().getClass().getName());
-        });
-    }
-
     // ===================================================================================
     //                                                                    Welcome to Devil
     //                                                                    ================
@@ -418,4 +400,39 @@ public class Step12StreamStringTest extends PlainTestCase {
     // */
     //public void test_parseMap_nested() {
     //}
+
+    //only for test
+    public void test_forTest() {
+        /*
+        String secretMap = " dockside = over ; hangar = mystic ; broadway = map:{ encore! = musical ; bbb = review } ";
+        //String secretMap = " dockside = over ; broadway = map:{ encore! = musical ; bbb = review } ; hangar = mystic ";
+        int mapStart = secretMap.lastIndexOf(";", secretMap.indexOf("map:{"));
+        int mapEnd = secretMap.indexOf(";",secretMap.lastIndexOf("}"))+1;
+        //log(mapEnd);
+        //log(secretMap);
+        //log(secretMap.substring(0,mapStart));
+        //log(secretMap.substring(mapEnd));
+        //log(secretMap.substring(mapStart+1,mapEnd-1));
+        //String a = secretMap.substring(mapStart+1,mapEnd-1);
+        String a = secretMap.substring(mapStart+1);
+        log(a);// broadway = map:{ encore! = musical ; bbb = review }
+        log(a.substring(1,a.indexOf("=")-1));
+        log(a.substring(a.indexOf("=")+2));
+        log(mapStart);
+        */
+
+        log("aabaa".indexOf("a",2));
+        log("aabaa".lastIndexOf("a",2));
+
+        List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
+        ColorBox box = colorBoxes.get(6);
+        List<BoxSpace> space = box.getSpaceList();
+        space.stream().forEach(sp -> {
+            log(sp.toString());
+            //log(((YourPrivateRoom.SecretBox)sp.getContent()).getText());
+        });
+        space.stream().forEach(sp -> {
+            log(sp.getContent().getClass().getName());
+        });
+    }
 }
