@@ -67,6 +67,8 @@ public class Step11ClassicStringTest extends PlainTestCase {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         int longest = 0;
         String longestStr = null;
+        // TODO 陳 if文がNestしていて読みづらくなっている...guard節で書き直してみよう！ by もってぃ
+        //         ref: https://refactoring.com/catalog/replaceNestedConditionalWithGuardClauses.html
         if (!colorBoxList.isEmpty()) {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
@@ -74,6 +76,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                     //String str = boxSpace.toString();
                     if (boxSpace.getContent() == null)
                         continue;
+                    // TODO 陳 instanceofを使ってStringであることを判定してみよう by もってぃ
                     if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
                         continue;
                     String str = boxSpace.toString();
@@ -100,6 +103,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_length_findMaxMinDiff() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         int longest = 0;
+        // TODO 陳 ColorBoxは空じゃないけど、Stringが一つも含まれていないときに"一番長いものと短いものの差"は10000になってしまわないかな？ by もってぃ
         int shotest = 10000;
         if (!colorBoxList.isEmpty()) {
             for (ColorBox colorBox : colorBoxList) {
@@ -134,6 +138,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
         int longest = 0;
         int longest2 = 0;
         String sea = null;
+        // TODO 陳 unusedな変数は削除しよう！ by もってぃ
         String land2 = null;
         if (!colorBoxList.isEmpty()) {
             for (ColorBox colorBox : colorBoxList) {
