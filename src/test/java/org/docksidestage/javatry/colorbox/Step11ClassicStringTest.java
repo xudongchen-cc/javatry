@@ -15,7 +15,6 @@
  */
 package org.docksidestage.javatry.colorbox;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;

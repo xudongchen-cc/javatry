@@ -99,8 +99,8 @@ public class Step12StreamStringTest extends PlainTestCase {
                 .map(colorSpace -> colorSpace.toString())
                 .collect(Collectors.toList());
         List<Integer> sizes = allStrings.stream().map(str -> str.length()).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
-        //.sorted(Comparator.reverseOrder())//降順
-        //.sorted(Comparator.reverseOrder())// 昇順
+        //.sorted(Comparator.reverseOrder())// 降順
+        //.sorted(Comparator.naturalOrder())// 昇順?
         String sea = allStrings.stream().filter(str -> str.length() == sizes.get(1)).findFirst().orElse(null);
         log(sea);//the first one
     }
@@ -294,8 +294,7 @@ public class Step12StreamStringTest extends PlainTestCase {
             devilBox.allowMe();
             devilBox.open();
         });
-        int sumLength = devilBoxes.stream()
-                .map(devilBox -> {
+        int sumLength = devilBoxes.stream().map(devilBox -> {
             try {
                 return devilBox.getText();
             } catch (YourPrivateRoom.DevilBoxTextNotFoundException e) {
@@ -319,11 +318,10 @@ public class Step12StreamStringTest extends PlainTestCase {
                 .map(colorBox -> colorBox.getSpaceList())
                 .flatMap(colorSpace -> colorSpace.stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof java.util.Map)
-                .map(colorSpace -> (Map)colorSpace.getContent())
+                .map(colorSpace -> (Map) colorSpace.getContent())
                 .collect(Collectors.toList());
         List<String> results = new ArrayList<>();
-        for(Map mapspace :mapSpaces)
-        {
+        for (Map mapspace : mapSpaces) {
             String result = "map:{ ";
             Set<String> keys = mapspace.keySet();
             for (String key : keys) {
@@ -352,11 +350,10 @@ public class Step12StreamStringTest extends PlainTestCase {
                 .map(colorBox -> colorBox.getSpaceList())
                 .flatMap(colorSpace -> colorSpace.stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof java.util.Map)
-                .map(colorSpace -> (Map)colorSpace.getContent())
+                .map(colorSpace -> (Map) colorSpace.getContent())
                 .collect(Collectors.toList());
         List<String> results = new ArrayList<>();
-        for(Map mapspace :mapSpaces)
-        {
+        for (Map mapspace : mapSpaces) {
             results.add(getMapResult(mapspace));
         }
         if (!results.isEmpty())
@@ -421,18 +418,20 @@ public class Step12StreamStringTest extends PlainTestCase {
         log(mapStart);
         */
 
-        log("aabaa".indexOf("a",2));
-        log("aabaa".lastIndexOf("a",2));
-
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-        ColorBox box = colorBoxes.get(6);
-        List<BoxSpace> space = box.getSpaceList();
-        space.stream().forEach(sp -> {
-            log(sp.toString());
-            //log(((YourPrivateRoom.SecretBox)sp.getContent()).getText());
-        });
-        space.stream().forEach(sp -> {
-            log(sp.getContent().getClass().getName());
-        });
+        for (int i = 0; i < colorBoxes.size(); i++) {
+            ColorBox box = colorBoxes.get(i);
+            List<BoxSpace> space = box.getSpaceList();
+            log("BOX NUMBER:" + i);
+            space.stream().forEach(sp -> {
+                log(sp.toString());
+                //log(((YourPrivateRoom.SecretBox)sp.getContent()).getText());
+            });
+            space.stream().forEach(sp -> {
+                if (sp.getContent() != null)
+                    log(sp.getContent().getClass().getName());
+                //log(sp.getContent() instanceof Integer);
+            });
+        }
     }
 }
