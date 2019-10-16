@@ -43,8 +43,8 @@ public class Step13NumberTest extends PlainTestCase {
         long result = colorBoxList.stream()
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof Integer)
-                .filter(colorSpace -> ((Integer) colorSpace.getContent()).compareTo(0) == 1)
-                .filter(colorSpace -> ((Integer) colorSpace.getContent()).compareTo(54) == -1)
+                .filter(colorSpace -> ((Integer) colorSpace.getContent()).compareTo(0) > 0)
+                .filter(colorSpace -> ((Integer) colorSpace.getContent()).compareTo(54) < 0)
                 .count();
         log(result);
     }
@@ -58,9 +58,9 @@ public class Step13NumberTest extends PlainTestCase {
         long result = colorBoxList.stream()
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof Number)
-                .filter(colorSpace -> ((Number) colorSpace.getContent()).doubleValue() >= 0)
+                .filter(colorSpace -> ((Number) colorSpace.getContent()).doubleValue() > 0)
                 .filter(colorSpace -> ((Number) colorSpace.getContent()).doubleValue() <= 54)
-                //たぶん問題あり
+                //second box のなかに 54(long) があります
                 .count();
         log(result);
     }
@@ -91,32 +91,18 @@ public class Step13NumberTest extends PlainTestCase {
      * What is total of BigDecimal values in List in color-boxes? <br>
      * (カラーボックスの中に入ってる List の中の BigDecimal を全て足し合わせると？)
      */
-    public void test_sumBigDecimalInList() {//can be improved?
+    public void test_sumBigDecimalInList() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-
-        List<List> withList = colorBoxList.stream()
+        List<BigDecimal> resultCollect = colorBoxList.stream()
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(boxSpace -> boxSpace.getContent() instanceof List)
-                .map(boxSpace -> (List) boxSpace.getContent())
+                .flatMap(boxSpace -> ((List<Object>) boxSpace.getContent()).stream())
+                .filter(content -> content instanceof BigDecimal)
+                .map(content -> (BigDecimal) content)
                 .collect(Collectors.toList());
-
-        /*
-        List test = withList.stream()
-                .flatMap(list -> list.stream())
-                .collect(Collectors.toList());*/
-
-        List<BigDecimal> insideList = new ArrayList();
-        for (List elements : withList) {
-            for (Object element : elements) {
-                if (element instanceof BigDecimal)
-                    insideList.add((BigDecimal) element);
-            }
-        }
-
         BigDecimal result = BigDecimal.ZERO;
-        for (BigDecimal bigDecimal : insideList)
+        for (BigDecimal bigDecimal : resultCollect)
             result = result.add(bigDecimal);
-
         log(result);
     }
 
@@ -127,40 +113,89 @@ public class Step13NumberTest extends PlainTestCase {
      * What key is related to value that is max number in Map that has only number in color-boxes? <br>
      * (カラーボックスに入ってる、valueが数値のみの Map の中で一番大きいvalueのkeyは？)
      */
-    public void test_findMaxMapNumberValue() {
+    public void test_findMaxMapNumberValue() {//問題あるような気がする
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<Map> withMap = colorBoxList.stream()
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(boxSpace -> boxSpace.getContent() instanceof Map)
                 .map(boxSpace -> (Map) boxSpace.getContent())
                 .collect(Collectors.toList());
-        log(withMap.size());
 
-        List<Map> insideMap = new ArrayList();
-        for (Map<String,Object> elements : withMap) {
+        List<Map> insideMap = new ArrayList<>();
+        for (Map<String, Object> elements : withMap) {
             Set<String> keys = elements.keySet();
             boolean flag = true;
             for (String key : keys) {
                 if (!(elements.get(key) instanceof Number))
                     flag = false;
             }
-            if(flag)
+            if (flag)
                 insideMap.add(elements);
         }
-        log(insideMap.size());
+
+        String keyMax = null;
+        int valueMax = 0;
+
+        Map<String, Number> resultMap = insideMap.get(0);
+        Set<String> keys = resultMap.keySet();
+        for (String key : keys) {
+            if ((int) resultMap.get(key) > valueMax) {
+                valueMax = (int) resultMap.get(key);
+                keyMax = key;
+            }
+        }
+        log(keyMax);
     }
 
     /**
      * What is total of number or number-character values in Map in purple color-box? <br> 
      * (purpleのカラーボックスに入ってる Map の中のvalueの数値・数字の合計は？)
      */
-    public void test_sumMapNumberValue() {
+    public void test_sumMapNumberValue() {//number with .(3.3) may be problem
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<Map> withMap = colorBoxList.stream()
+                .filter(colorBox -> colorBox.getColor().getColorName().equals("purple"))
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(boxSpace -> boxSpace.getContent() instanceof Map)
                 .map(boxSpace -> (Map) boxSpace.getContent())
                 .collect(Collectors.toList());
-        log(withMap);
+
+        int sum = 0;
+        for (Map<String, Object> elements : withMap) {
+            Set<String> keys = elements.keySet();
+            for (String key : keys) {
+                Object value = elements.get(key);
+                if (value instanceof Number)
+                    sum += ((Number) value).intValue();
+                if (value instanceof String) {
+                    try {
+                        Integer tmp = Integer.valueOf((String) value);
+                        sum += tmp;
+                    } catch (RuntimeException ignored) {
+                    }
+                }
+            }
+        }
+        log(sum);
+    }
+
+    public void test_forNumTest(){
+        /*
+        Integer a = Integer.valueOf(3);
+        log(a.compareTo(3));//0
+        log(a.compareTo(1));//1
+        log(a.compareTo(5));//-1
+        Double b = Double.valueOf(54.3);
+        log(b.doubleValue());
+        */
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<Double> result = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(colorSpace -> colorSpace.getContent() instanceof Number)
+                .map(colorSpace -> ((Number) colorSpace.getContent()).doubleValue())
+                //.filter(colorSpace -> ((Number) colorSpace.getContent()).doubleValue() > 0)
+                //.filter(colorSpace -> ((Number) colorSpace.getContent()).doubleValue() <= 54)
+                .collect(Collectors.toList());
+        log(result);
     }
 }

@@ -535,7 +535,22 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * What string is converted to style "map:{ key = value ; key = value ; ... }" from java.util.Map in color-boxes? <br>
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = value ; ... }" という形式で表示すると？)
      */
+
+//    private void methd(List<? extends Number> a)
+//    {
+//        log("");
+//    }
+
     public void test_showMap_flat() {
+        //List<?> xx = new ArrayList<>();
+
+        //List<? extends Number> xx 　メソッド変数として使える
+        //List<Integer> a = new ArrayList<>();
+        //methd(a);
+
+        //List<Number> xx = new ArrayList<>();
+        //xx.add(Integer.valueOf(1));
+
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<String> results = new ArrayList<>();
         if (!colorBoxList.isEmpty()) {
@@ -545,10 +560,11 @@ public class Step11ClassicStringTest extends PlainTestCase {
                     if (boxSpace.getContent() instanceof java.util.Map) {
                         String result = "map:{ ";
                         Map content = (Map) boxSpace.getContent();
+                        //entrySetあるから、これも使える
                         Set<String> keys = content.keySet();
                         for (String key : keys) {
                             result = result + key + " = " + content.get(key) + " ; ";
-                            //最後;ある
+                            //ここまで最後の;ある
                         }
                         result = result.substring(0, result.lastIndexOf(";"));
                         result = result + "}";
@@ -602,7 +618,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 result = result + key + " = " + getMapResult((Map) content.get(key)) + " ; ";
             else
                 result = result + key + " = " + content.get(key) + " ; ";
-            //最後;ある
+            //ここまで最後の;ある
         }
         result = result.substring(0, result.lastIndexOf(";"));
         result = result + "}";

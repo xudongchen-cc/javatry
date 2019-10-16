@@ -56,10 +56,8 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_length_findMax() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<String> allStrings = colorBoxList.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
-                .filter(colorSpace -> colorSpace.getContent() != null)
-                .filter(colorSpace -> colorSpace.getContent().getClass().getSimpleName().equals("String"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(colorSpace -> colorSpace.getContent() instanceof String)
                 .map(colorSpace -> colorSpace.toString())
                 .collect(Collectors.toList());
         int longest = allStrings.stream().mapToInt(str -> str.length()).max().orElse(-1);
@@ -74,10 +72,8 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_length_findMaxMinDiff() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<String> allStrings = colorBoxList.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
-                .filter(colorSpace -> colorSpace.getContent() != null)
-                .filter(colorSpace -> colorSpace.getContent().getClass().getSimpleName().equals("String"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(colorSpace -> colorSpace.getContent() instanceof String)
                 .map(colorSpace -> colorSpace.toString())
                 .collect(Collectors.toList());
         int longest = allStrings.stream().mapToInt(str -> str.length()).max().orElse(-1);
@@ -91,16 +87,15 @@ public class Step12StreamStringTest extends PlainTestCase {
      * Which value (toString() if non-string) has second-max length in color-boxes? (sort allowed in Stream)<br>
      * (カラーボックスに入ってる値 (文字列以外はtoString()) の中で、二番目に長い文字列は？ (Streamでのソートありで))
      */
-    public void test_length_findSecondMax() {//TODO　あとで確かめる
+    public void test_length_findSecondMax() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<String> allStrings = colorBoxList.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .map(colorSpace -> colorSpace.toString())
                 .collect(Collectors.toList());
         List<Integer> sizes = allStrings.stream().map(str -> str.length()).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
         //.sorted(Comparator.reverseOrder())// 降順
-        //.sorted(Comparator.naturalOrder())// 昇順?
+        //.sorted(Comparator.naturalOrder())// 昇順
         String sea = allStrings.stream().filter(str -> str.length() == sizes.get(1)).findFirst().orElse(null);
         log(sea);//the first one
     }
@@ -113,10 +108,8 @@ public class Step12StreamStringTest extends PlainTestCase {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         if (!colorBoxList.isEmpty()) {
             List<String> allStrings = colorBoxList.stream()
-                    .map(colorBox -> colorBox.getSpaceList())
-                    .flatMap(colorSpace -> colorSpace.stream())
-                    .filter(colorSpace -> colorSpace.getContent() != null)
-                    .filter(colorSpace -> colorSpace.getContent().getClass().getSimpleName().equals("String"))
+                    .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                    .filter(colorSpace -> colorSpace.getContent() instanceof String)
                     .map(colorSpace -> colorSpace.toString())
                     .collect(Collectors.toList());
             int sumLength = allStrings.stream().mapToInt(str -> str.length()).sum();
@@ -128,15 +121,15 @@ public class Step12StreamStringTest extends PlainTestCase {
      * Which color name has max length in color-boxes? <br>
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
-    public void test_length_findMaxColorSize() {//TODO　修正
+    public void test_length_findMaxColorSize() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
-        List<String> AllColors = colorBoxes.stream()
+        List<String> allColors = colorBoxes.stream()
                 .map(colorBox -> colorBox.getColor())
                 .map(boxColor -> boxColor.getColorName())
                 .collect(Collectors.toList());
-        int longest = AllColors.stream().mapToInt(colorStr -> colorStr.length()).distinct().max().orElse(-1);
-        String sea = AllColors.stream().filter(str -> str.length() == longest).findFirst().orElse(null);
-        log(sea);//the first one
+        int longest = allColors.stream().mapToInt(colorStr -> colorStr.length()).distinct().max().orElse(-1);
+        List<String> sea = allColors.stream().filter(str -> str.length() == longest).distinct().collect(Collectors.toList());
+        log(sea);
     }
 
     // ===================================================================================
@@ -174,10 +167,8 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_indexOf_findIndex() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
         colorBoxes.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
-                .filter(colorSpace -> colorSpace.getContent() != null)
-                .filter(colorSpace -> colorSpace.getContent().getClass().getSimpleName().equals("String"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(colorSpace -> colorSpace.getContent() instanceof String)
                 .filter(colorSpace -> colorSpace.toString().endsWith("front"))
                 .forEach(colorSpace -> log(colorSpace.toString().indexOf("front") + 1));
     }
@@ -189,10 +180,8 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_lastIndexOf_findIndex() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
         colorBoxes.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
-                .filter(colorSpace -> colorSpace.getContent() != null)
-                .filter(colorSpace -> colorSpace.getContent().getClass().getSimpleName().equals("String"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(colorSpace -> colorSpace.getContent() instanceof String)
                 .filter(colorSpace -> colorSpace.toString().indexOf("ど") != colorSpace.toString().lastIndexOf("ど"))
                 .forEach(colorSpace -> log(colorSpace.toString().lastIndexOf("ど") + 1));
     }
@@ -207,10 +196,8 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_substring_findFirstChar() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
         colorBoxes.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
-                .filter(colorSpace -> colorSpace.getContent() != null)
-                .filter(colorSpace -> colorSpace.getContent().getClass().getSimpleName().equals("String"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(colorSpace -> colorSpace.getContent() instanceof String)
                 .map(colorSpace -> colorSpace.toString())
                 .filter(spaceStr -> spaceStr.endsWith("front"))
                 .forEach(spaceStr -> log(spaceStr.substring(0, 1)));
@@ -223,10 +210,8 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_substring_findLastChar() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
         colorBoxes.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
-                .filter(colorSpace -> colorSpace.getContent() != null)
-                .filter(colorSpace -> colorSpace.getContent().getClass().getSimpleName().equals("String"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(colorSpace -> colorSpace.getContent() instanceof String)
                 .map(colorSpace -> colorSpace.toString())
                 .filter(spaceStr -> spaceStr.startsWith("Water"))
                 .forEach(spaceStr -> log(spaceStr.substring(spaceStr.length() - 1)));
@@ -242,10 +227,8 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_replace_remove_o() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
         colorBoxes.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
-                .filter(colorSpace -> colorSpace.getContent() != null)
-                .filter(colorSpace -> colorSpace.getContent().getClass().getSimpleName().equals("String"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(colorSpace -> colorSpace.getContent() instanceof String)
                 .map(colorSpace -> colorSpace.toString())
                 .filter(spaceStr -> spaceStr.contains("o"))
                 .forEach(spaceStr -> {
@@ -263,10 +246,8 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_replace_fileseparator() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
         colorBoxes.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
-                .filter(colorSpace -> colorSpace.getContent() != null)
-                .filter(colorSpace -> colorSpace.getContent().getClass().getName().equals("java.io.File"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(colorSpace -> colorSpace.getContent() instanceof java.io.File)
                 .map(colorSpace -> colorSpace.toString())
                 .forEach(spaceStr -> {
                     spaceStr = spaceStr.replace("/", "\\");//¥¥?
@@ -284,12 +265,11 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_welcomeToDevil() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
         List<YourPrivateRoom.DevilBox> devilBoxes = colorBoxes.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof YourPrivateRoom.DevilBox)
                 .map(colorSpace -> (YourPrivateRoom.DevilBox) colorSpace.getContent())
                 .collect(Collectors.toList());
-        devilBoxes.stream().forEach(devilBox -> {
+        devilBoxes.forEach(devilBox -> {
             devilBox.wakeUp();
             devilBox.allowMe();
             devilBox.open();
@@ -315,8 +295,7 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_showMap_flat() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
         List<Map> mapSpaces = colorBoxes.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof java.util.Map)
                 .map(colorSpace -> (Map) colorSpace.getContent())
                 .collect(Collectors.toList());
@@ -326,7 +305,7 @@ public class Step12StreamStringTest extends PlainTestCase {
             Set<String> keys = mapspace.keySet();
             for (String key : keys) {
                 result = result + key + " = " + mapspace.get(key) + " ; ";
-                //最後;ある
+                //ここまで最後の;ある
             }
             result = result.substring(0, result.lastIndexOf(";"));
             result = result + "}";
@@ -347,8 +326,7 @@ public class Step12StreamStringTest extends PlainTestCase {
     public void test_showMap_nested() {
         List<ColorBox> colorBoxes = new YourPrivateRoom().getColorBoxList();
         List<Map> mapSpaces = colorBoxes.stream()
-                .map(colorBox -> colorBox.getSpaceList())
-                .flatMap(colorSpace -> colorSpace.stream())
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof java.util.Map)
                 .map(colorSpace -> (Map) colorSpace.getContent())
                 .collect(Collectors.toList());
@@ -372,7 +350,7 @@ public class Step12StreamStringTest extends PlainTestCase {
                 result = result + key + " = " + getMapResult((Map) content.get(key)) + " ; ";
             else
                 result = result + key + " = " + content.get(key) + " ; ";
-            //最後;ある
+            //ここまで最後の;ある
         }
         result = result.substring(0, result.lastIndexOf(";"));
         result = result + "}";
@@ -423,11 +401,11 @@ public class Step12StreamStringTest extends PlainTestCase {
             ColorBox box = colorBoxes.get(i);
             List<BoxSpace> space = box.getSpaceList();
             log("BOX NUMBER:" + i);
-            space.stream().forEach(sp -> {
+            space.forEach(sp -> {
                 log(sp.toString());
                 //log(((YourPrivateRoom.SecretBox)sp.getContent()).getText());
             });
-            space.stream().forEach(sp -> {
+            space.forEach(sp -> {
                 if (sp.getContent() != null)
                     log(sp.getContent().getClass().getName());
                 //log(sp.getContent() instanceof Integer);
