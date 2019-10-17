@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class Step14DateTest extends PlainTestCase {
      * What string is date in color-boxes formatted as slash-separated (e.g. 2019/04/24)? <br>
      * (カラーボックスに入っている日付をスラッシュ区切り (e.g. 2019/04/24) のフォーマットしたら？)
      */
-    public void test_formatDate() {
+    public void test_formatDate() {//DateTimeFormatter.ofPattern("uuuu/MM/dd");
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         colorBoxList.stream()
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
@@ -230,7 +231,7 @@ public class Step14DateTest extends PlainTestCase {
         int decimals2date = colorBoxList.stream()
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(boxSpace -> boxSpace.getContent() instanceof List)
-                .flatMap(boxSpace -> ((List<Object>) boxSpace.getContent()).stream())
+                .flatMap(boxSpace -> ((List<?>) boxSpace.getContent()).stream())
                 .filter(content -> content instanceof BigDecimal)
                 .map(content -> ((BigDecimal) content).doubleValue())
                 .filter(content -> content > 3 && content < 4)

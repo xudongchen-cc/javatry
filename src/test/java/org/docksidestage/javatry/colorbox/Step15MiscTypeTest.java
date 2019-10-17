@@ -91,7 +91,7 @@ public class Step15MiscTypeTest extends PlainTestCase {
                 .filter(colorBox -> colorBox.getColor().getColorName().equals("beige"))
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(boxSpace -> boxSpace.getContent() instanceof List)
-                .flatMap(boxSpace -> ((List<Object>) boxSpace.getContent()).stream())
+                .flatMap(boxSpace -> ((List<?>) boxSpace.getContent()).stream())
                 .filter(content -> content instanceof YourPrivateRoom.BoxedResort)
                 .map(content -> (YourPrivateRoom.BoxedResort) content)
                 .map(boxedResort -> boxedResort.getPark())

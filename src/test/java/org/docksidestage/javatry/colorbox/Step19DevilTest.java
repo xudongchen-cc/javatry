@@ -15,11 +15,11 @@
  */
 package org.docksidestage.javatry.colorbox;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
@@ -27,7 +27,7 @@ import org.docksidestage.unit.PlainTestCase;
  * The test of Devil with color-box, (try if you woke up Devil in StringTest) <br>
  * Show answer by log() for question of javadoc.
  * @author jflute
- * @author your_name_here
+ * @author xudong
  */
 public class Step19DevilTest extends PlainTestCase {
 
@@ -42,7 +42,7 @@ public class Step19DevilTest extends PlainTestCase {
      * (nullを含んでいるカラーボックスの色の名前の3文字目の文字で色の名前が終わっているカラーボックスの深さの十の位の数字が小数点第二桁目になっている
      * スペースの中のリストの中で最初に見つかるBigDecimalの一の位の数字と同じ色の長さのカラーボックスの一番下のスペースに入っているものは？)
      */
-    public void test_too_long() {
+    public void test_too_long() {//小数点のところまで
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<String> firstBoxName = colorBoxList.stream()
                 .filter(colorBox -> colorBox.getSpaceList().stream().anyMatch(boxSpace -> boxSpace.getContent() == null))
@@ -63,12 +63,17 @@ public class Step19DevilTest extends PlainTestCase {
         List<Number> collectList = colorBoxList.stream()
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof List)
-                .flatMap(boxSpace -> ((List<Object>) boxSpace.getContent()).stream())
+                .flatMap(boxSpace -> ((List<?>) boxSpace.getContent()).stream())
                 .filter(content -> content instanceof Number)
                 .map(content -> (Number) content)
                 .collect(Collectors.toList());
         assert(!collectList.isEmpty());
         log(collectList);
+
+        for(Number num:collectList)
+        {
+            log(num.getClass().getName());
+        }
 
     }
 
@@ -79,9 +84,16 @@ public class Step19DevilTest extends PlainTestCase {
      * What string of toString() is BoxSize of red color-box after changing height to 160 (forcedly in this method)? <br>
      * ((このテストメソッドの中だけで無理やり)赤いカラーボックスの高さを160に変更して、BoxSizeをtoString()すると？)
      */
-    public void test_looks_like_easy() {
+    public void test_looks_like_easy() {//実現したみたいけど
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<ColorBox> redBoxL =
+                colorBoxList.stream().filter(colorBox -> colorBox.getColor().getColorName().equals("red")).collect(Collectors.toList());
+        assert(redBoxL.size()==1);
+        ColorBox redBox = redBoxL.get(0);
+        log(redBox.getSize().getHeight());//height not changed
 
+        redBox.getSize().setHeight(160);
+        log(redBox.getSize().toString());
     }
 
     // ===================================================================================
@@ -91,8 +103,13 @@ public class Step19DevilTest extends PlainTestCase {
      * What value is returned from no-parameter functional method of interface that has FunctionalInterface annotation in color-boxes? <br> 
      * (カラーボックスに入っているFunctionalInterfaceアノテーションが付与されているインターフェースの引数なしのFunctionalメソッドの戻り値は？)
      */
-    public void test_be_frameworker() {
+    public void test_be_frameworker() {//まだ
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<BoxSpace> collect = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(boxSpace -> boxSpace.getContent() instanceof FunctionalInterface)
+                .collect(Collectors.toList());
+        log(collect);
 
     }
 }

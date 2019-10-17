@@ -23,7 +23,8 @@ public class BoxSize {
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    private final int height;
+    //private final int height;//19だけ 無理やり
+    private int height;//19だけ 無理やり
     private final int width;
     private final int depth;
 
@@ -57,5 +58,10 @@ public class BoxSize {
 
     public int getDepth() {
         return depth;
+    }
+
+    //19だけ 無理やり
+    public void setHeight(int newHeight) {
+        this.height = newHeight;
     }
 }
