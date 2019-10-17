@@ -15,6 +15,7 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,14 +52,23 @@ public class Step19DevilTest extends PlainTestCase {
         assert(!firstBoxName.isEmpty());
         log(firstBoxName);
 
-        List<Integer> secondBoxDepth = colorBoxList.stream()
+        List<Integer> secondBoxNumber = colorBoxList.stream()
                 .filter(colorBox -> colorBox.getColor().getColorName().endsWith(firstBoxName.get(0)))
                 .map(colorBox -> colorBox.getSize().getDepth()/10)
                 .distinct()
                 .collect(Collectors.toList());
-        assert(!secondBoxDepth.isEmpty());
-        log(secondBoxDepth);
+        assert(!secondBoxNumber.isEmpty());
+        log(secondBoxNumber);
 
+        List<Number> collectList = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(colorSpace -> colorSpace.getContent() instanceof List)
+                .flatMap(boxSpace -> ((List<Object>) boxSpace.getContent()).stream())
+                .filter(content -> content instanceof Number)
+                .map(content -> (Number) content)
+                .collect(Collectors.toList());
+        assert(!collectList.isEmpty());
+        log(collectList);
 
     }
 

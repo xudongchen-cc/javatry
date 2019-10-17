@@ -74,7 +74,7 @@ public class Step13NumberTest extends PlainTestCase {
      * What color name is used by color-box that has integer-type content and the biggest width in them? <br>
      * (カラーボックスの中で、Integer型の Content を持っていてBoxSizeの幅が一番大きいカラーボックスの色は？)
      */
-    public void test_findColorBigWidthHasInteger() {
+    public void test_findColorBigWidthHasInteger() {//Comparator.comparing()
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         List<ColorBox> withInteger = colorBoxList.stream()
                 .filter(colorBox -> colorBox.getSpaceList().stream().anyMatch(boxSpace -> boxSpace.getContent() instanceof Integer))
