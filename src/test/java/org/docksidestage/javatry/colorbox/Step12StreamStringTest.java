@@ -302,6 +302,7 @@ public class Step12StreamStringTest extends PlainTestCase {
         List<String> results = new ArrayList<>();
         for (Map mapspace : mapSpaces) {
             String result = "map:{ ";
+            // TODO chen 警告を消せるように頑張ってみよう by katashin 2019/10/17
             Set<String> keys = mapspace.keySet();
             for (String key : keys) {
                 result = result + key + " = " + mapspace.get(key) + " ; ";
