@@ -78,7 +78,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                     //    continue;
                     //if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
                     //    continue;
-                    if(!(boxSpace.getContent() instanceof String))
+                    if (!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.length() > longest) {
@@ -110,7 +110,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    if(!(boxSpace.getContent() instanceof String))
+                    if (!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.length() > longest) {
@@ -131,29 +131,34 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * Which value (toString() if non-string) has second-max length in color-boxes? (without sort) <br>
      * (カラーボックスに入ってる値 (文字列以外はtoString()) の中で、二番目に長い文字列は？ (ソートなしで))
      */
-    public void test_length_findSecondMax() {//the last one//monaiari　TODO　修正
+    public void test_length_findSecondMax() {//get the first
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         int longest = 0;
         int longest2 = 0;
         String sea = null;
         // TODO 陳 unusedな変数は削除しよう！ by もってぃ
+        // done 全体的に修正しました
         String land2 = null;
         if (!colorBoxList.isEmpty()) {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
                     String str = boxSpace.toString();
-                    if (str.length() > longest) {
+                    if (str.length() > longest) {//最初の時も大丈夫
+                        longest2 = longest;
+                        land2 = sea;//save the longest to the second
                         longest = str.length();
+                        sea = str;//save the recent longest
+                        continue;
                     }
                     if (str.length() > longest2 && !(str.length() == longest)) {
                         longest2 = str.length();
-                        sea = str;
+                        land2 = str;
                     }
                 }
             }
-            if (!sea.isEmpty())
-                log(sea);
+            if (!land2.isEmpty())
+                log(land2);
             else {
                 log("*not found");
             }
@@ -173,7 +178,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    if(!(boxSpace.getContent() instanceof String))
+                    if (!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     sum += str.length();
@@ -189,16 +194,20 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * Which color name has max length in color-boxes? <br>
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
-    public void test_length_findMaxColorSize() {//the last one(set hash set)TODO　修正
+    public void test_length_findMaxColorSize() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         int longest = 0;
-        String longestColor = null;
+        Set<String> longestColor = new HashSet<>();
         if (!colorBoxList.isEmpty()) {
             for (ColorBox colorBox : colorBoxList) {
                 String colorString = colorBox.getColor().getColorName();
                 if (colorString.length() > longest) {
                     longest = colorString.length();
-                    longestColor = colorString;
+                    longestColor.clear();
+                    longestColor.add(colorString);
+                }
+                if (colorString.length() == longest) {
+                    longestColor.add(colorString);
                 }
             }
             if (!longestColor.isEmpty())
@@ -227,7 +236,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 colorTmp = colorBox.getColor().getColorName();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    if(!(boxSpace.getContent() instanceof String))
+                    if (!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.startsWith("Water"))
@@ -258,7 +267,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 colorTmp = colorBox.getColor().getColorName();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    if(!(boxSpace.getContent() instanceof String))
+                    if (!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.endsWith("front"))
@@ -290,7 +299,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    if(!(boxSpace.getContent() instanceof String))
+                    if (!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.endsWith("front"))
@@ -319,7 +328,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    if(!(boxSpace.getContent() instanceof String))
+                    if (!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.indexOf("ど") != str.lastIndexOf("ど"))
@@ -351,7 +360,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    if(!(boxSpace.getContent() instanceof String))
+                    if (!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.endsWith("front"))
@@ -380,7 +389,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    if(!(boxSpace.getContent() instanceof String))
+                    if (!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.endsWith("front"))
@@ -412,7 +421,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    if(!(boxSpace.getContent() instanceof String))
+                    if (!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.contains("o")) {
@@ -443,7 +452,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    if(!(boxSpace.getContent() instanceof java.io.File))
+                    if (!(boxSpace.getContent() instanceof java.io.File))
                         continue;
                     String str = boxSpace.toString();
                     str = str.replace("/", "\\");//¥¥?
@@ -508,11 +517,10 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = value ; ... }" という形式で表示すると？)
      */
 
-//    private void methd(List<? extends Number> a)
-//    {
-//        log("");
-//    }
-
+    //    private void methd(List<? extends Number> a)
+    //    {
+    //        log("");
+    //    }
     public void test_showMap_flat() {
         //List<?> xx = new ArrayList<>();
 
@@ -704,7 +712,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             }
 
             String middleString;
-            if(mapEnd == 0)
+            if (mapEnd == 0)
                 middleString = secretMap.substring(mapStart + 1);
             else
                 middleString = secretMap.substring(mapStart + 1, mapEnd - 1);
