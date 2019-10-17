@@ -39,12 +39,17 @@ public class Step13NumberTest extends PlainTestCase {
      * (カラーボックの中に入っているInteger型で、0から54までの値は何個ある？)
      */
     public void test_countZeroToFiftyFour_IntegerOnly() {
+        //at least, at most -> include
+        //より大きい 0<x
+        //以上 0<x, 0<=x
+        //以下 x<=54
+        //未満 x<54
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         long result = colorBoxList.stream()
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof Integer)
-                .filter(colorSpace -> ((Integer) colorSpace.getContent()).compareTo(0) > 0)
-                .filter(colorSpace -> ((Integer) colorSpace.getContent()).compareTo(54) < 0)
+                .filter(colorSpace -> ((Integer) colorSpace.getContent()).compareTo(0) >= 0)
+                .filter(colorSpace -> ((Integer) colorSpace.getContent()).compareTo(54) <= 0)
                 .count();
         log(result);
     }
@@ -58,7 +63,7 @@ public class Step13NumberTest extends PlainTestCase {
         long result = colorBoxList.stream()
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(colorSpace -> colorSpace.getContent() instanceof Number)
-                .filter(colorSpace -> ((Number) colorSpace.getContent()).doubleValue() > 0)
+                .filter(colorSpace -> ((Number) colorSpace.getContent()).doubleValue() >= 0)
                 .filter(colorSpace -> ((Number) colorSpace.getContent()).doubleValue() <= 54)
                 //second box のなかに 54(long) があります
                 .count();

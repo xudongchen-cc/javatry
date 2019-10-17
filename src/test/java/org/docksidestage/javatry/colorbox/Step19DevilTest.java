@@ -46,8 +46,19 @@ public class Step19DevilTest extends PlainTestCase {
         List<String> firstBoxName = colorBoxList.stream()
                 .filter(colorBox -> colorBox.getSpaceList().stream().anyMatch(boxSpace -> boxSpace.getContent() == null))
                 .map(colorBox -> colorBox.getColor().getColorName().substring(2, 3))
+                .distinct()
                 .collect(Collectors.toList());
+        assert(!firstBoxName.isEmpty());
         log(firstBoxName);
+
+        List<Integer> secondBoxDepth = colorBoxList.stream()
+                .filter(colorBox -> colorBox.getColor().getColorName().endsWith(firstBoxName.get(0)))
+                .map(colorBox -> colorBox.getSize().getDepth()/10)
+                .distinct()
+                .collect(Collectors.toList());
+        assert(!secondBoxDepth.isEmpty());
+        log(secondBoxDepth);
+
 
     }
 
@@ -59,6 +70,8 @@ public class Step19DevilTest extends PlainTestCase {
      * ((このテストメソッドの中だけで無理やり)赤いカラーボックスの高さを160に変更して、BoxSizeをtoString()すると？)
      */
     public void test_looks_like_easy() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
     }
 
     // ===================================================================================
@@ -69,5 +82,7 @@ public class Step19DevilTest extends PlainTestCase {
      * (カラーボックスに入っているFunctionalInterfaceアノテーションが付与されているインターフェースの引数なしのFunctionalメソッドの戻り値は？)
      */
     public void test_be_frameworker() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
     }
 }
