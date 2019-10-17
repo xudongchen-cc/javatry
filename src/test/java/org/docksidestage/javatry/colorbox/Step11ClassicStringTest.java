@@ -73,10 +73,12 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
                     //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    // TODO 陳 instanceofを使ってStringであることを判定してみよう by もってぃ
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    // TODO done 陳 instanceofを使ってStringであることを判定してみよう by もってぃ
+                    //if (boxSpace.getContent() == null)
+                    //    continue;
+                    //if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    //    continue;
+                    if(!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.length() > longest) {
@@ -102,16 +104,13 @@ public class Step11ClassicStringTest extends PlainTestCase {
     public void test_length_findMaxMinDiff() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         int longest = 0;
-        // TODO 陳 ColorBoxは空じゃないけど、Stringが一つも含まれていないときに"一番長いものと短いものの差"は10000になってしまわないかな？ by もってぃ
         int shotest = 10000;
+        // TODO 陳 ColorBoxは空じゃないけど、Stringが一つも含まれていないときに"一番長いものと短いものの差"は10000になってしまわないかな？ by もってぃ
         if (!colorBoxList.isEmpty()) {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    if(!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.length() > longest) {
@@ -174,10 +173,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    if(!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     sum += str.length();
@@ -231,10 +227,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 colorTmp = colorBox.getColor().getColorName();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    if(!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.startsWith("Water"))
@@ -265,10 +258,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 colorTmp = colorBox.getColor().getColorName();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    if(!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.endsWith("front"))
@@ -300,10 +290,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    if(!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.endsWith("front"))
@@ -332,10 +319,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    if(!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.indexOf("ど") != str.lastIndexOf("ど"))
@@ -367,10 +351,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    if(!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.endsWith("front"))
@@ -399,10 +380,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    if(!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.endsWith("front"))
@@ -434,10 +412,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
+                    if(!(boxSpace.getContent() instanceof String))
                         continue;
                     String str = boxSpace.toString();
                     if (str.contains("o")) {
@@ -468,10 +443,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for (ColorBox colorBox : colorBoxList) {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
-                    //String str = boxSpace.toString();
-                    if (boxSpace.getContent() == null)
-                        continue;
-                    if (!boxSpace.getContent().getClass().getName().equals("java.io.File"))
+                    if(!(boxSpace.getContent() instanceof java.io.File))
                         continue;
                     String str = boxSpace.toString();
                     str = str.replace("/", "\\");//¥¥?

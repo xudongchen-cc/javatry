@@ -400,7 +400,8 @@ public class Step12StreamStringTest extends PlainTestCase {
         for (int i = 0; i < colorBoxes.size(); i++) {
             ColorBox box = colorBoxes.get(i);
             List<BoxSpace> space = box.getSpaceList();
-            log("BOX NUMBER:" + i);
+            log("BOX NUMBER: " + i);
+            log("BOX COLOR: " + box.getColor().getColorName());
             space.forEach(sp -> {
                 log(sp.toString());
                 //log(((YourPrivateRoom.SecretBox)sp.getContent()).getText());

@@ -15,13 +15,21 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
  * The test of various type with color-box. <br>
  * Show answer by log() for question of javadoc.
  * @author jflute
- * @author your_name_here
+ * @author xudong
  */
 public class Step15MiscTypeTest extends PlainTestCase {
 
@@ -33,6 +41,12 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っているthrowできるオブジェクトのクラス名は？)
      */
     public void test_throwable() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(boxSpace -> boxSpace.getContent() instanceof Throwable)
+                .map(boxSpace -> boxSpace.getContent())
+                .forEach(o -> log(o.getClass().getName()));
     }
 
     /**
@@ -40,6 +54,12 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っている例外オブジェクトのネストした例外インスタンスのメッセージは？)
      */
     public void test_nestedException() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(boxSpace -> boxSpace.getContent() instanceof Throwable)
+                .map(boxSpace -> (Throwable) boxSpace.getContent())
+                .forEach(throwable -> log(throwable.getMessage()));
     }
 
     // ===================================================================================
@@ -50,6 +70,12 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (カラーボックスに入っているFavoriteProviderインターフェースのjustHere()メソッドの戻り値は？)
      */
     public void test_interfaceCall() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(boxSpace -> boxSpace.getContent() instanceof YourPrivateRoom.FavoriteProvider)
+                .map(boxSpace -> (YourPrivateRoom.FavoriteProvider) boxSpace.getContent())
+                .forEach(favoriteProvider -> log(favoriteProvider.justHere()));
     }
 
     // ===================================================================================
@@ -60,6 +86,50 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (beigeのカラーボックスに入っているListの中のBoxedResortのBoxedStageのkeywordは？(値がなければ固定の"none"という値を))
      */
     public void test_optionalMapping() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<Optional<YourPrivateRoom.BoxedPark>> parkItems = colorBoxList.stream()
+                .filter(colorBox -> colorBox.getColor().getColorName().equals("beige"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(boxSpace -> boxSpace.getContent() instanceof List)
+                .flatMap(boxSpace -> ((List<Object>) boxSpace.getContent()).stream())
+                .filter(content -> content instanceof YourPrivateRoom.BoxedResort)
+                .map(content -> (YourPrivateRoom.BoxedResort) content)
+                .map(boxedResort -> boxedResort.getPark())
+                .collect(Collectors.toList());
+
+        List<Optional<YourPrivateRoom.BoxedStage>> itemStages = new ArrayList<>();
+        for (Optional<YourPrivateRoom.BoxedPark> parkItem : parkItems) {
+            if (parkItem.isPresent()) {
+                itemStages.add(parkItem.get().getStage());
+            } else {
+                log("none");
+            }
+        }
+        for (Optional<YourPrivateRoom.BoxedStage> itemStage : itemStages) {
+            if (itemStage.isPresent()) {
+                String str = itemStage.get().getKeyword();
+                if (str != null)
+                    log(str);
+                else
+                    log("none");
+            } else {
+                log("none");
+            }
+        }
+
+        //        colorBoxList.stream()
+        //                .filter(colorBox -> colorBox.getColor().getColorName().equals("beige"))
+        //                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+        //                .filter(boxSpace -> boxSpace.getContent() instanceof List)
+        //                .flatMap(boxSpace -> ((List<Object>) boxSpace.getContent()).stream())
+        //                .filter(content -> content instanceof YourPrivateRoom.BoxedResort)
+        //                .map(content -> (YourPrivateRoom.BoxedResort) content)
+        //                .map(boxedResort -> boxedResort.getPark())
+        //                .filter(boxedPark -> boxedPark.isPresent())
+        //                .map(boxedPark -> boxedPark.get().getStage())
+        //                .filter(boxedStage -> boxedStage.isPresent())
+        //                .map(boxedStage -> boxedStage.get().getKeyword())
+        //                .forEach(s -> log(s == null ? "none" : s));
     }
 
     // ===================================================================================
@@ -70,5 +140,15 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (getColorBoxList()メソッドの中のmakeEighthColorBox()メソッドを呼び出している箇所の行数は？)
      */
     public void test_lineNumber() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .filter(boxSpace -> boxSpace.getContent() instanceof Throwable)
+                .map(boxSpace -> (Throwable) boxSpace.getContent())
+                .filter(throwable -> Arrays.stream(throwable.getCause().getStackTrace()).anyMatch(stackTraceElement->stackTraceElement.getMethodName().equals("makeEighthColorBox")))
+                .flatMap(throwable -> Arrays.stream(throwable.getCause().getStackTrace()))
+                //.filter(stackTraceElement -> stackTraceElement.getMethodName().equals("makeEighthColorBox"))
+                .filter(stackTraceElement -> stackTraceElement.getMethodName().equals("getColorBoxList"))
+                .forEach(stackTraceElement -> log(stackTraceElement.getLineNumber()));
     }
 }
