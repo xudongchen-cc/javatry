@@ -117,19 +117,19 @@ public class Step15MiscTypeTest extends PlainTestCase {
             }
         }
 
-        //        colorBoxList.stream()
-        //                .filter(colorBox -> colorBox.getColor().getColorName().equals("beige"))
-        //                .flatMap(colorBox -> colorBox.getSpaceList().stream())
-        //                .filter(boxSpace -> boxSpace.getContent() instanceof List)
-        //                .flatMap(boxSpace -> ((List<Object>) boxSpace.getContent()).stream())
-        //                .filter(content -> content instanceof YourPrivateRoom.BoxedResort)
-        //                .map(content -> (YourPrivateRoom.BoxedResort) content)
-        //                .map(boxedResort -> boxedResort.getPark())
-        //                .filter(boxedPark -> boxedPark.isPresent())
-        //                .map(boxedPark -> boxedPark.get().getStage())
-        //                .filter(boxedStage -> boxedStage.isPresent())
-        //                .map(boxedStage -> boxedStage.get().getKeyword())
-        //                .forEach(s -> log(s == null ? "none" : s));
+//        colorBoxList.stream()
+//                .filter(colorBox -> colorBox.getColor().getColorName().equals("beige"))
+//                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+//                .filter(boxSpace -> boxSpace.getContent() instanceof List)
+//                .flatMap(boxSpace -> ((List<?>) boxSpace.getContent()).stream())
+//                .filter(content -> content instanceof YourPrivateRoom.BoxedResort)
+//                .map(content -> (YourPrivateRoom.BoxedResort) content)
+//                .map(boxedResort -> boxedResort.getPark())
+//                .filter(boxedPark -> boxedPark.isPresent())
+//                .map(boxedPark -> boxedPark.get().getStage())
+//                .filter(boxedStage -> boxedStage.isPresent())
+//                .map(boxedStage -> boxedStage.get().getKeyword())
+//                .forEach(s -> log(s == null ? "none" : s));
     }
 
     // ===================================================================================
@@ -145,7 +145,8 @@ public class Step15MiscTypeTest extends PlainTestCase {
                 .flatMap(colorBox -> colorBox.getSpaceList().stream())
                 .filter(boxSpace -> boxSpace.getContent() instanceof Throwable)
                 .map(boxSpace -> (Throwable) boxSpace.getContent())
-                .filter(throwable -> Arrays.stream(throwable.getCause().getStackTrace()).anyMatch(stackTraceElement->stackTraceElement.getMethodName().equals("makeEighthColorBox")))
+                .filter(throwable -> Arrays.stream(throwable.getCause().getStackTrace())
+                        .anyMatch(stackTraceElement -> stackTraceElement.getMethodName().equals("makeEighthColorBox")))
                 .flatMap(throwable -> Arrays.stream(throwable.getCause().getStackTrace()))
                 //.filter(stackTraceElement -> stackTraceElement.getMethodName().equals("makeEighthColorBox"))
                 .filter(stackTraceElement -> stackTraceElement.getMethodName().equals("getColorBoxList"))
