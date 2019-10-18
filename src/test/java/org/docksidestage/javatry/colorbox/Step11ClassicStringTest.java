@@ -73,7 +73,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 List<BoxSpace> boxSpaceList = colorBox.getSpaceList();
                 for (BoxSpace boxSpace : boxSpaceList) {
                     //String str = boxSpace.toString();
-                    // TODO done 陳 instanceofを使ってStringであることを判定してみよう by もってぃ
+                    // done 陳 instanceofを使ってStringであることを判定してみよう by もってぃ
                     //if (boxSpace.getContent() == null)
                     //    continue;
                     //if (!boxSpace.getContent().getClass().getSimpleName().equals("String"))
@@ -136,7 +136,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
         int longest = 0;
         int longest2 = 0;
         String sea = null;
-        // TODO 陳 unusedな変数は削除しよう！ by もってぃ
+        // 陳 unusedな変数は削除しよう！ by もってぃ
         // done 全体的に修正しました
         String land2 = null;
         if (!colorBoxList.isEmpty()) {
