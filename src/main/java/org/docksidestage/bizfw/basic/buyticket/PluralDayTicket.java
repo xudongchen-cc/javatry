@@ -3,7 +3,7 @@ package org.docksidestage.bizfw.basic.buyticket;
 /**
  * @author xudong
  */
-// TODO done xudong create class for ticket of plural days mentioned at test_class_moreFix_useInterface. and aggregate FourDayTicket and TwoDayTicket to the class. by katashin (2019/10/09)
+// done xudong create class for ticket of plural days mentioned at test_class_moreFix_useInterface. and aggregate FourDayTicket and TwoDayTicket to the class. by katashin (2019/10/09)
 // test_class_moreFix_useInterfaceで書かれているように、複数日用のクラスを作成しよう。そして TwoDayTicketとFourDayTicketをそのクラスにまとめてみよう
 // done xudong add a space between Ticket and begin bracket . (e.g. Ticket { ) by katashin (2019/10/09)
 // use keyboard shortcut to fix it. (command + option + L)

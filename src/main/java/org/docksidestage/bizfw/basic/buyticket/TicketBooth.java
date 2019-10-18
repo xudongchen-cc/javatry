@@ -69,7 +69,7 @@ public class TicketBooth {
     }
     */
 
-    // TODO done xudong accumulating to buyPassport method is good. define constant value of type as static final string is better.
+    // done xudong accumulating to buyPassport method is good. define constant value of type as static final string is better.
     // buyPassportにまとまったのはいいね。 typeのための定数を、static final stringとして宣言できるといいね。
     // ならば、static　final　stringではなく、直接にenumを使っても大丈夫ですか。
     // done xudong method parameter is presented as lowercase as a habit. so price is better than PRICE. by katashin (2019/10/09)
